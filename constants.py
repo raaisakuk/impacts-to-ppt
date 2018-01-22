@@ -151,12 +151,12 @@ staff = ["17. Does your hospital require specific peds competency evaluations of
     "20. Does your hospital require specific peds competency evaluations of nurses? (e.g., triage, pain assessment)"]
 score_staff = [5, 5]
 
-pi = ["25. Does your ED have a peds patient care-review process? (This may be a separate Quality Improvement/Performance Improvement Plan for pediatric patients or integrated into the overall ED Quality Improvement/Performance Improvement Plan.)",
+qi_pi = ["25. Does your ED have a peds patient care-review process? (This may be a separate Quality Improvement/Performance Improvement Plan for pediatric patients or integrated into the overall ED Quality Improvement/Performance Improvement Plan.)",
     "26. If yes, is each of the following components included in the QI/PI plan? - a. Identification of quality indicators for children (e.g., performing lumbar puncture on febrile neonates)",
     "26. If yes, is each of the following components included in the QI/PI plan? - b. Collection and analysis of peds emergency care data (e.g., admissions, transfers, death in the ED, or return visits)",
     "26. If yes, is each of the following components included in the QI/PI plan? - c. Development of a plan for improvement in pediatric emergency care e (e.g., process to ensure that variances in care are addressed through education or training and reassessed for evidence of improvement)",
     "26. If yes, is each of the following components included in the QI/PI plan? - d. Re-evaulation of performance using outcomes-based measures (e.g., how often pain was rapidly controlled or fever properly treated)"]
-pi_score = [5, 0.5, 0.5, 0.5, 0.5]
+qi_pi_score = [5, 0.5, 0.5, 0.5, 0.5]
 
 safety = ["28. Is the weight recorded in the ED medical record in kilograms only?",
           "Pediatric safety in the ED - 30. Temp, heart rate, respiratory rate recorded?",
