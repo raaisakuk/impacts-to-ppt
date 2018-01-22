@@ -1,4 +1,5 @@
-"""All the constants go in here!"""
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 ##Headers for score calculations##
 
