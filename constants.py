@@ -241,3 +241,9 @@ equip_score = [1, 1, 1, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55,
                0.557, 0.557, 0.557, 0.557, 0.557, 0.557, 0.557, 0.557, 0.557,
                0.557, 0.557, 0.557, 0.557, 0.557, 0.557, 0.557, 0.557, 0.557, 0.557]
 
+##GED and PED
+ged = {"sepsis": 73, "fbd": 80, "seizure": 68, "cardiac_arrest": 52, "teamwork": 74, "emsc": 64,
+       "emsc_qipi": 36, "emsc_staff": 60, "emsc_safety": 72, "emsc_equip": 84, "emsc_policy": 53}
+
+ped = {"sepsis": 100, "fbd": 80, "seizure": 78, "cardiac_arrest": 67, "teamwork": 86, "emsc": 90,
+       "emsc_qipi": 81, "emsc_staff": 85, "emsc_safety": 76, "emsc_equip": 98, "emsc_policy": 92}
