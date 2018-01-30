@@ -98,7 +98,7 @@ cts_tool_all = ["Clinical Teamwork Scale (CTS) Not relevant- The task was not ap
                 "Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Role Responsibility: Perform as a helper",
                 "Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Patient friendly"]
 
-cts_tool_ind = ["Foreign Body - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Overall: How would you rate teamwork during this delivery/emergency?",
+cts_tool_ind_fbd = ["Foreign Body - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Overall: How would you rate teamwork during this delivery/emergency?",
                 "Foreign Body - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Overall Communication Rating:",
                 "Foreign Body - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Communication : Orient new members (SBAR)",
                 "Foreign Body - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Communication: Transparent thinking",
@@ -112,8 +112,9 @@ cts_tool_ind = ["Foreign Body - Clinical Teamwork Scale (CTS) Not relevant- The 
                 "Foreign Body - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Role Responsibility : Role clarity",
                 "Foreign Body - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Role Responsibility : Perform as a leader",
                 "Foreign Body - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Role Responsibility :  Perform as a helper",
-                "Foreign Body - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Patient friendly",
-                "Sepsis - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Overall: How would you rate teamwork during this delivery/emergency?",
+                "Foreign Body - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Patient friendly"]
+
+cts_tool_ind_sep = ["Sepsis - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Overall: How would you rate teamwork during this delivery/emergency?",
                 "Sepsis - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Overall Communication Rating:",
                 "Sepsis - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Communication:  Orient new members (SBAR)",
                 "Sepsis - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Communication : Transparent thinking",
@@ -127,8 +128,9 @@ cts_tool_ind = ["Foreign Body - Clinical Teamwork Scale (CTS) Not relevant- The 
                 "Sepsis - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Role Responsibility : Role clarity",
                 "Sepsis - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Role Responsibility : Perform as a leader",
                 "Sepsis - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Role Responsibility : Perform as a helper",
-                "Sepsis - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Patient friendly",
-                "Seizure - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Overall: How would you rate teamwork during this delivery/emergency?",
+                "Sepsis - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Patient friendly"]
+
+cts_tool_ind_seiz = ["Seizure - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Overall: How would you rate teamwork during this delivery/emergency?",
                 "Seizure - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Overall Communication Rating:",
                 "Seizure - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Communication: Orient new members (SBAR)",
                 "Seizure - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Communication : Transparent thinking",
@@ -142,8 +144,9 @@ cts_tool_ind = ["Foreign Body - Clinical Teamwork Scale (CTS) Not relevant- The 
                 "Seizure - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Role Responsibility : Role clarity",
                 "Seizure - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Role Responsibility : Perform as a leader",
                 "Seizure - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Role Responsibility: Perform as a helper",
-                "Seizure - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Patient friendly",
-                "Cardiac Arrest - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Overall: How would you rate teamwork during this delivery/emergency?",
+                "Seizure - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Patient friendly"]
+
+cts_tool_ind_cardiac = ["Cardiac Arrest - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Overall: How would you rate teamwork during this delivery/emergency?",
                 "Cardiac Arrest - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Overall Communication Rating:",
                 "Cardiac Arrest - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Communication : Orient new members (SBAR)",
                 "Cardiac Arrest - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Communication : Transparent thinking",
