@@ -65,3 +65,62 @@ def get_case_performance_graph(hosp_name, case_name, case_score, fig_name):
     for a, b in zip(pos, y_vals):
         ax.text(a, b+0.25, str(b), color='blue', fontweight='bold')
     plt.savefig(fig_name)
+
+def convert_truth_values_to_num(hosp_df):
+    curr_df = hosp_df.replace('Yes', 1)
+    curr_df = curr_df.replace('No', 0)
+    return curr_df
+
+def get_emsc_score(hosp_val_df, emsc_header, emsc_score):
+    '''assume nan doesn't exist
+    hosp_val_df : yes/no converted to 1/0
+    '''
+    total_score = sum(emsc_score)
+    num = 0
+    for header, val in zip(emsc_header, emsc_score):
+        num = num + hosp_val_df[header]*val
+    percent_score = 100*np.around((num/total_score), decimals=4)
+    return percent_score
+
+def plot_triple_bargraph(hosp_name, first_val_arr, second_name,
+                         second_val_arr, third_name, third_val_arr, ylabel,
+                         title, xlabels, filename):
+    pos = list(range(len(first_val_arr)))
+    width = 0.25
+    fig, ax = plt.subplots(figsize=(10, 5))
+    plt.bar(pos, first_val_arr, width, alpha=0.5, color='r', label=hosp_name, capsize=2)
+    plt.bar([p + width for p in pos], second_val_arr, width, alpha=0.5, color='g', label=second_name, capsize=2)
+    plt.bar([p + 2 * width for p in pos], third_val_arr, width, alpha=0.5, color='b', label=third_name, capsize=2)
+    ax.set_title(title)
+    ax.set_xticks([p + width for p in pos])
+    ax.set_xticklabels(xlabels, rotation="vertical")
+    ax.set_ylabel(ylabel)
+    plt.legend([hosp_name, second_name, third_name], loc="lower center", bbox_to_anchor=(1.1, 0.8))
+    plt.savefig(filename)
+
+def plot_emsc_graph(hosp_name, qipi, staff, safety, equip, policy, filename):
+    ged_scores = [const.ged_score["emsc_qipi"], const.ged_score["emsc_policy"], const.ged_score["emsc_safety"],
+                  const.ged_score["emsc_staff"], const.ged_score["emsc_equip"]]
+    ped_scores = [const.ped_score["emsc_qipi"], const.ped_score["emsc_policy"], const.ped_score["emsc_safety"],
+                  const.ped_score["emsc_staff"], const.ped_score["emsc_equip"]]
+    hosp_scores = [qipi, policy, safety, staff, equip]
+    plot_triple_bargraph(hosp_name, hosp_scores, const.ped_name, ped_scores, const.ged_name, ged_scores, "Score %",
+                         "EMSC Pediatric Readiness", ["Quality Improvement", "Policies/Procedures",
+                                                      "Patient Safety", "Physician/Nurse Staffing",
+                                                      "Equipment and Supplies"], filename)
+
+def plot_performance_summary(hosp_name, fbd, sepsis, cardiac_arrest, teamwork, emsc, seizure, filename):
+    ged_scores = [const.ged_score["emsc"], const.ged_score["fbd"], const.ged_score["sepsis"],
+                  const.ged_score["seizure"], const.ged_score["cardiac_arrest"], const.ged_score["teamwork"]]
+    ped_scores = [const.ped_score["emsc"], const.ped_score["fbd"], const.ped_score["sepsis"],
+                  const.ped_score["seizure"], const.ped_score["cardiac_arrest"], const.ped_score["teamwork"]]
+    hosp_scores = [emsc, fbd, sepsis, seizure, cardiac_arrest, teamwork]
+    plot_triple_bargraph(hosp_name, hosp_scores, const.ped_name, ped_scores, const.ged_name, ged_scores,
+                         "Score %", "Performance Summary", ["EMSC Readiness Score", "Foreign Body Case Score",
+                                                      "Sepsis Case Score", "Seizure Case Score", "Cardiac Arrest Score",
+                                                            "Teamwork Score"], filename)
+
+def get_cts_all_score(hosp_df):
+    curr_df = hosp_df[const.cts_tool_all].T
+    percent_score = 100*np.around(curr_df.count()/curr_df.sum(), decimals=4)
+    return percent_score
