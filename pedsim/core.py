@@ -22,6 +22,7 @@ def get_hospital_data(excel_file, hospital_name):
 def get_case_performance_data(hosp_df, case_headers):
     '''
     assuming cases have more than two headers
+    data must be prsent for the case
     :param df: df obtained from get_hospital_data, it has only one row
     :param case_headers: h
     :return:
@@ -64,6 +65,7 @@ def get_case_performance_graph(hosp_name, case_name, case_score, fig_name):
     plt.title('Case Performance')
     for a, b in zip(pos, y_vals):
         ax.text(a, b+0.25, str(b), color='blue', fontweight='bold')
+    plt.tight_layout()
     plt.savefig(fig_name)
 
 def convert_truth_values_to_num(hosp_df):
@@ -71,15 +73,15 @@ def convert_truth_values_to_num(hosp_df):
     curr_df = curr_df.replace('No', 0)
     return curr_df
 
-def get_emsc_score(hosp_val_df, emsc_header, emsc_score):
+def get_emsc_score(hosp_val_df, col_name, emsc_header, emsc_score):
     '''assume nan doesn't exist
     hosp_val_df : yes/no converted to 1/0
     '''
     total_score = sum(emsc_score)
     num = 0
     for header, val in zip(emsc_header, emsc_score):
-        num = num + hosp_val_df[header]*val
-    percent_score = 100*np.around((num/total_score), decimals=4)
+        num = num + hosp_val_df.get_value(col_name, header)*val
+    percent_score = 100*np.around(num/total_score, decimals=4)
     return percent_score
 
 def plot_triple_bargraph(hosp_name, first_val_arr, second_name,
@@ -96,7 +98,9 @@ def plot_triple_bargraph(hosp_name, first_val_arr, second_name,
     ax.set_xticklabels(xlabels, rotation="vertical")
     ax.set_ylabel(ylabel)
     plt.legend([hosp_name, second_name, third_name], loc="lower center", bbox_to_anchor=(1.1, 0.8))
-    plt.savefig(filename)
+    plt.tight_layout()
+    plt.savefig(filename, bbox_inches='tight')
+
 
 def plot_emsc_graph(hosp_name, qipi, staff, safety, equip, policy, filename):
     ged_scores = [const.ged_score["emsc_qipi"], const.ged_score["emsc_policy"], const.ged_score["emsc_safety"],
@@ -105,9 +109,7 @@ def plot_emsc_graph(hosp_name, qipi, staff, safety, equip, policy, filename):
                   const.ped_score["emsc_staff"], const.ped_score["emsc_equip"]]
     hosp_scores = [qipi, policy, safety, staff, equip]
     plot_triple_bargraph(hosp_name, hosp_scores, const.ped_name, ped_scores, const.ged_name, ged_scores, "Score %",
-                         "EMSC Pediatric Readiness", ["Quality Improvement", "Policies/Procedures",
-                                                      "Patient Safety", "Physician/Nurse Staffing",
-                                                      "Equipment and Supplies"], filename)
+                         "EMSC Pediatric Readiness", ["Quality Improvement", "Policies/Procedures", "Patient Safety", "Physician/Nurse Staffing", "Equipment and Supplies"], filename)
 
 def plot_performance_summary(hosp_name, fbd, sepsis, cardiac_arrest, teamwork, emsc, seizure, filename):
     ged_scores = [const.ged_score["emsc"], const.ged_score["fbd"], const.ged_score["sepsis"],
@@ -120,7 +122,7 @@ def plot_performance_summary(hosp_name, fbd, sepsis, cardiac_arrest, teamwork, e
                                                       "Sepsis Case Score", "Seizure Case Score", "Cardiac Arrest Score",
                                                             "Teamwork Score"], filename)
 
-def get_cts_all_score(hosp_df):
-    curr_df = hosp_df[const.cts_tool_all].T
-    percent_score = 100*np.around(curr_df.count()/curr_df.sum(), decimals=4)
+def get_cts_score(hosp_df, header):
+    curr_df = hosp_df[header].T
+    percent_score = 100*np.around(curr_df.sum()/(10*curr_df.count()), decimals=4)
     return percent_score
