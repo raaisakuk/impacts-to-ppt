@@ -1,7 +1,7 @@
 import core
 import constants as const
 
-hosp_name = "Garfield Medical Center"
+hosp_name = "MedSchool"
 df = core.get_hospital_data("C:\Users\Raaisa\OneDrive\Yale\Sample_report_out_-_for_automation\Demo for Raaisa.xlsx",
                             hosp_name)
 
