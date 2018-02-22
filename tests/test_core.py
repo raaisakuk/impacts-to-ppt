@@ -2,7 +2,6 @@ import os
 import pickle
 
 import pandas as pd
-
 import pedsim.core as core
 import pedsim.constants as const
 

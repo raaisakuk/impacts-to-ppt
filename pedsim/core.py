@@ -3,17 +3,17 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-
-
-""""
-1. Have to get row first
-2. Calculate score from the row
-"""
-
 def get_hospital_data(excel_file, hospital_name):
-    #It will consider max of the entries in the column if there are entries in both rows
-    # #This ensures that nan is not selected but if both rows have entries it can create
-    ##issues... to be kept in mind
+    '''
+    Reads excel file which has all the data and in case any hospital has data in more than
+    one rows, combines them on the basis of max. The idea is that if this is the case, all
+    rows will be empty except one.
+    Todo: If both rows have entries it can create problems. User should be warned in such
+    cases.
+    :param excel_file: survey output from Qualtrix
+    :param hospital_name: hospital for which report out has to be made
+    :return: dataframe with all hospitals having data in one row
+    '''
     report_out = pd.read_excel(excel_file)
     new_report_out = report_out[report_out[const.site_hosp] == hospital_name].\
         groupby([const.site_hosp]).max().fillna('').reset_index()
