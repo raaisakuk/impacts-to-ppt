@@ -12,7 +12,7 @@ def get_hospital_data(excel_file, hospital_name):
     cases.
     :param excel_file: survey output from Qualtrix
     :param hospital_name: hospital for which report out has to be made
-    :return: dataframe with all hospitals having data in one row
+    :return: dataframe with the data corresponding to only the given hospital
     '''
     report_out = pd.read_excel(excel_file)
     new_report_out = report_out[report_out[const.site_hosp] == hospital_name].\
