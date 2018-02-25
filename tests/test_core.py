@@ -11,7 +11,6 @@ single_row_df = pickle.load(open(os.path.join(path_dir, "xb.p"), "r"))
 hn_nofbddata = pickle.load(open(os.path.join(path_dir, "hn_nofbddata.p"), "r"))
 
 fbd_df = pickle.load(open(os.path.join(path_dir, "hn_fbd.p"), "r"))
-empty_fbd_case = pickle.load(open(os.path.join(path_dir, "empty_fbd_case.p"), "r"))
 fbd_all_no = pickle.load(open(os.path.join(path_dir, "fbd_all_no.p"), "r"))
 #pickle.dump(xb,open("xb.p","w"))
 
@@ -35,9 +34,6 @@ def test_get_case_performance_data_all_nan():
 
 def test_get_case_performance_score():
     assert core.get_case_performance_score(fbd_df) == 50
-
-def test_get_case_performance_score_all_nan():
-    assert core.get_case_performance_score(empty_fbd_case) == -1
 
 def test_get_case_performance_score_all_no():
     assert core.get_case_performance_score(fbd_all_no) == 0

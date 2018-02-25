@@ -51,16 +51,13 @@ def get_case_performance_score(case_df):
     over all the teams.
     :param case_df: df from get_case_performance_data which contains questions and ans
     for all teams for a particular case
-    :return: percentage score, -1 if there is no data for the given case
+    :return: percentage score
     '''
     all_scores = case_df[const.hosp_ans].value_counts(True)
     try:
         return 100 * (np.around(all_scores.loc['Yes'], decimals=4))
     except KeyError:
-        try:
-            return 100 - 100 * (np.around(all_scores.loc['No'], decimals=4))
-        except KeyError:
-            return -1
+        return 100 - 100 * (np.around(all_scores.loc['No'], decimals=4))
 
 def get_case_performance_checklist(case_df, col_name, filename):
     case_df[const.index_name] = case_df[const.index_name].apply(lambda x: x.split('.')[0])
