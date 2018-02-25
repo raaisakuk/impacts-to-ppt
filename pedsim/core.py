@@ -24,6 +24,7 @@ def get_case_performance_data(hosp_df, case_headers):
     assuming that the number of questions for each case are two or more. The questions
     and answers are transposed to get a dataframe with given questions and answers as data
     in rows.
+    Todo: Raise custom exception instead of returning -1
     :param df: df obtained from get_hospital_data, it has only the row which corresponds
     to the answers obtained from a particular hospital
     :param case_headers: Questions for a particular case form the column names and this list
