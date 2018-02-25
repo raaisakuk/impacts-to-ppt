@@ -12,6 +12,9 @@ hn_nofbddata = pickle.load(open(os.path.join(path_dir, "hn_nofbddata.p"), "r"))
 
 fbd_df = pickle.load(open(os.path.join(path_dir, "hn_fbd.p"), "r"))
 fbd_all_no = pickle.load(open(os.path.join(path_dir, "fbd_all_no.p"), "r"))
+
+checklist_multiteams = pickle.load(open(os.path.join(path_dir, "checklist_multiteams.p"), "r"))
+checklist_oneteam = pickle.load(open(os.path.join(path_dir, "checklist_oneteam.p"), "r"))
 #pickle.dump(xb,open("xb.p","w"))
 
 def test_get_hospital_data_two_rows():
@@ -37,6 +40,14 @@ def test_get_case_performance_score():
 
 def test_get_case_performance_score_all_no():
     assert core.get_case_performance_score(fbd_all_no) == 0
+
+def test_get_case_performance_checklist_multiple_teams():
+    checklist = core.get_case_performance_checklist(fbd_df)
+    assert pd.DataFrame.equals(checklist, checklist_multiteams)
+
+def test_get_case_performance_checklist_single_team():
+    checklist = core.get_case_performance_checklist(fbd_all_no)
+    assert pd.DataFrame.equals(checklist, checklist_oneteam)
 
 def test_get_case_performance_graph():
     core.get_case_performance_graph('Garfield', 'fbd', 50, 'test_plot.png')
