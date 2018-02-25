@@ -20,12 +20,15 @@ def get_hospital_data(excel_file, hospital_name):
     return new_report_out.replace('', np.nan)
 
 def get_case_performance_data(hosp_df, case_headers):
-    '''
-    assuming cases have more than two headers
-    data must be prsent for the case
-    :param df: df obtained from get_hospital_data, it has only one row
-    :param case_headers: h
-    :return:
+    '''Getting data for all the teams for a particular set of questions. Here we are
+    assuming that the number of questions for each case are two or more. The questions
+    and answers are transposed to get a dataframe with given questions and answers as data
+    in rows.
+    :param df: df obtained from get_hospital_data, it has only the row which corresponds
+    to the answers obtained from a particular hospital
+    :param case_headers: Questions for a particular case form the column names and this list
+    contains those column names
+    :return: dataframe with team number, questions and answers
     '''
     df1 = hosp_df.filter(like=case_headers[0]).T.reset_index()
     df2 = hosp_df.filter(like=case_headers[1]).T.reset_index()
