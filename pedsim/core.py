@@ -28,7 +28,7 @@ def get_case_performance_data(hosp_df, case_headers):
     to the answers obtained from a particular hospital
     :param case_headers: Questions for a particular case form the column names and this list
     contains those column names
-    :return: dataframe with team number, questions and answers
+    :return: dataframe with team number, questions and answers, if answers Nan return -1
     '''
     df1 = hosp_df.filter(like=case_headers[0]).T.reset_index()
     df2 = hosp_df.filter(like=case_headers[1]).T.reset_index()
@@ -39,7 +39,11 @@ def get_case_performance_data(hosp_df, case_headers):
     case_df = df.reset_index()
     case_df.rename(mapper={'index': const.index_name, 'level_0': const.replicates,
                            0: const.hosp_ans}, axis='columns', inplace=True)
-    return case_df
+    if case_df[const.hosp_ans].isnull().all():
+        return -1
+    else:
+        return case_df
+
 
 def get_case_performance_score(case_df):
     '''Case performance score is % of questions answered Yes by each team, averaged
