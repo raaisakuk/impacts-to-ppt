@@ -41,16 +41,20 @@ def get_case_performance_data(hosp_df, case_headers):
                            0: const.hosp_ans}, axis='columns', inplace=True)
     return case_df
 
-def get_case_performance_score(case_df, col_name):
-    '''
+def get_case_performance_score(case_df):
     count number of Yes and normalise, output in %
     :param hosp_df:
     :param case_headers:
     :return:
     '''
-    score = case_df[col_name].value_counts(True).loc["Yes"]
-    percent_score = 100*(np.around(score, decimals=4))
-    return percent_score
+    all_scores = case_df[const.hosp_ans].value_counts(True)
+    try:
+        return 100 * (np.around(all_scores.loc['Yes'], decimals=4))
+    except KeyError:
+        try:
+            return 100 - 100 * (np.around(all_scores.loc['No'], decimals=4))
+        except KeyError:
+            return -1
 
 def get_case_performance_checklist(case_df, col_name, filename):
     case_df[const.index_name] = case_df[const.index_name].apply(lambda x: x.split('.')[0])
