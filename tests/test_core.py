@@ -2,6 +2,8 @@ import os
 import pickle
 
 import pandas as pd
+import matplotlib.pyplot as plt
+
 import pedsim.core as core
 import pedsim.constants as const
 
@@ -50,4 +52,5 @@ def test_get_case_performance_checklist_single_team():
     assert pd.DataFrame.equals(checklist, checklist_oneteam)
 
 def test_get_case_performance_graph():
-    core.get_case_performance_graph('Garfield', 'fbd', 50, 'test_plot.png')
+    fig = core.get_case_performance_graph('medschool', 'fbd', 50)
+    fig.savefig(os.path.join(path_dir,'test_plot.png'))

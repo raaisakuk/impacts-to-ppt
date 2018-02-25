@@ -1,7 +1,9 @@
-import constants as const
-import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
+import seaborn as sns
+
+import constants as const
 
 def get_hospital_data(excel_file, hospital_name):
     '''
@@ -45,7 +47,6 @@ def get_case_performance_data(hosp_df, case_headers):
     else:
         return case_df
 
-
 def get_case_performance_score(case_df):
     '''Case performance score is % of questions answered Yes by each team, averaged
     over all the teams.
@@ -72,20 +73,27 @@ def get_case_performance_checklist(case_df):
         .rename(columns=const.team_dict)
     return case_df.reset_index(level=[const.index_name])
 
-
-def get_case_performance_graph(hosp_name, case_name, case_score, fig_name):
+def get_case_performance_graph(hosp_name, case_name, case_score):
+    '''Plot bar graph for case performance score with GED and PED scores
+    :param hosp_name: Name of the hospital
+    :param case_name: Name of the case to get ged and ped score from constants
+    :param case_score: Score for the case
+    :return: Figure handle for the bar plot
+    '''
+    sns.set_style('whitegrid')
     fig, ax = plt.subplots(figsize=(10, 5))
-    pos = [0,1,2]
+    pos = [0, 1, 2]
     y_vals = [const.ged_score[case_name], const.ped_score[case_name], case_score]
     x_vals = [const.ged_name, const.ped_name, hosp_name]
-    plt.bar(pos, y_vals, align='center', alpha=0.5)
+    plt.bar(pos, y_vals, align='center', alpha=0.5, color=sns.color_palette("muted"))
     plt.xticks(pos, x_vals)
     plt.ylabel('%')
-    plt.title('Case Performance')
+    plt.title('Case Performance| '+const.case_name_dict[case_name])
+    plt.ylim([0, 100])
     for a, b in zip(pos, y_vals):
         ax.text(a, b+0.25, str(b), color='blue', fontweight='bold')
     plt.tight_layout()
-    plt.savefig(fig_name)
+    return fig
 
 def convert_truth_values_to_num(hosp_df):
     curr_df = hosp_df.replace('Yes', 1)
