@@ -59,11 +59,19 @@ def get_case_performance_score(case_df):
     except KeyError:
         return 100 - 100 * (np.around(all_scores.loc['No'], decimals=4))
 
-def get_case_performance_checklist(case_df, col_name, filename):
+def get_case_performance_checklist(case_df):
+    '''This checklist contains Question and corresponding answers for each team. It
+    has to go in the report.
+    :param case_df: df from get_case_performance_data which contains questions and ans
+    for all teams for a particular case
+    :return: dataframe of checklist formatted properly
+    '''
     case_df[const.index_name] = case_df[const.index_name].apply(lambda x: x.split('.')[0])
-    case_df = case_df.pivot_table(index=const.index_name, columns=const.replicates,
-                             values=[col_name], aggfunc='first')
-    case_df.rename(columns=const.team_dict).to_csv(filename)
+    case_df = case_df.groupby([const.index_name]).\
+        apply(lambda x: pd.Series(x[const.hosp_ans].dropna().values))\
+        .rename(columns=const.team_dict)
+    return case_df.reset_index(level=[const.index_name])
+
 
 def get_case_performance_graph(hosp_name, case_name, case_score, fig_name):
     fig, ax = plt.subplots(figsize=(10, 5))
