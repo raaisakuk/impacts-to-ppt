@@ -8,8 +8,9 @@
 site_hosp = "Enter the site's Hospital name"
 
 ##
-index_name = "index"
-replicates = "level_0"
+index_name = "questions"
+replicates = "team_num"
+hosp_ans = 'survey_ans'
 
 ##
 team_dict = {0: "Team 1", 1: "Team 2", 2: "Team 3",

@@ -34,8 +34,9 @@ def get_case_performance_data(hosp_df, case_headers):
         curr_df = hosp_df.filter(like=case_headers[i]).T.reset_index()
         df = pd.concat([df, curr_df])
     case_df = df.reset_index()
-    col_name = hosp_df.index[0]
-    return case_df, col_name
+    case_df.rename(mapper={'index': const.index_name, 'level_0': const.replicates,
+                           0: const.hosp_ans}, axis='columns', inplace=True)
+    return case_df
 
 def get_case_performance_score(case_df, col_name):
     '''
