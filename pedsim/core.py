@@ -42,10 +42,11 @@ def get_case_performance_data(hosp_df, case_headers):
     return case_df
 
 def get_case_performance_score(case_df):
-    count number of Yes and normalise, output in %
-    :param hosp_df:
-    :param case_headers:
-    :return:
+    '''Case performance score is % of questions answered Yes by each team, averaged
+    over all the teams.
+    :param case_df: df from get_case_performance_data which contains questions and ans
+    for all teams for a particular case
+    :return: percentage score, -1 if there is no data for the given case
     '''
     all_scores = case_df[const.hosp_ans].value_counts(True)
     try:
