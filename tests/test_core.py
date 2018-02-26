@@ -2,6 +2,7 @@ import os
 import pickle
 
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 
 import pedsim.core as core
@@ -64,7 +65,7 @@ def test_get_total_emsc_score():
     assert core.get_total_emsc_score(60, 55, 70, 85, 30, 45) == 57.5
 
 def test_get_emsc_score_nan():
-    assert core.get_emsc_score(two_rows_df, const.qi_pi, const.qi_pi_score) == -1
+    assert np.isnan(core.get_emsc_score(two_rows_df, const.qi_pi, const.qi_pi_score))
 
 def test_plot_triple_bargraph():
     fig = core.plot_triple_bargraph('medschool', [50,60,30], 'ped', [78,56,35], 'ged',

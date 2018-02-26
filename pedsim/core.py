@@ -108,7 +108,7 @@ def get_emsc_score(hosp_df, emsc_header, weights):
     calculated
     :param weights: weights corresponding to the above headers in the same
     order
-    :return: percentage score and -1 if all values nan
+    :return: percentage score which will be nan if all vals nan
     '''
     hosp_val_df = utils.convert_truth_values_to_num(hosp_df)
     total_score = sum(weights)
@@ -116,10 +116,7 @@ def get_emsc_score(hosp_df, emsc_header, weights):
     for header, val in zip(emsc_header, weights):
         num = num + hosp_val_df.get_value(const.hosprow_col, header)*val
     percent_score = 100*np.around(num/total_score, decimals=4)
-    if np.isnan(percent_score):
-        return -1
-    else:
-        return percent_score
+    return percent_score
 
 def get_total_emsc_score(qipi, staff, safety, equip, policy, admin):
     '''Total EMSC Readiness score is average of all the EMSC case scores
