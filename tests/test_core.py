@@ -39,7 +39,7 @@ def test_get_case_performance_data():
 
 def test_get_case_performance_data_all_nan():
     case_df = core.get_case_performance_data(hn_nofbddata, const.foreign_body_case)
-    assert case_df == -1
+    assert np.isnan(case_df)
 
 def test_get_case_performance_score():
     assert core.get_case_performance_score(fbd_df) == 50

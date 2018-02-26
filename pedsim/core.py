@@ -46,7 +46,7 @@ def get_case_performance_data(hosp_df, case_headers):
     case_df.rename(mapper={'index': const.index_name, 'level_0': const.replicates,
                            const.hosprow_col: const.hosp_ans}, axis='columns', inplace=True)
     if case_df[const.hosp_ans].isnull().all():
-        return -1
+        return np.nan
     else:
         return case_df
 
