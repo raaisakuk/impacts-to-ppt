@@ -59,9 +59,9 @@ def get_case_performance_score(case_df):
     '''
     all_scores = case_df[const.hosp_ans].value_counts(True)
     try:
-        return 100 * (np.around(all_scores.loc['Yes'], decimals=4))
+        return 100 * (np.around(all_scores.loc['Yes'], decimals=2))
     except KeyError:
-        return 100 - 100 * (np.around(all_scores.loc['No'], decimals=4))
+        return 100 - 100 * (np.around(all_scores.loc['No'], decimals=2))
 
 def get_case_performance_checklist(case_df):
     '''This checklist contains Question and corresponding answers for each team. It
@@ -115,7 +115,7 @@ def get_emsc_score(hosp_df, emsc_header, weights):
     num = 0
     for header, val in zip(emsc_header, weights):
         num = num + hosp_val_df.get_value(const.hosprow_col, header)*val
-    percent_score = 100*np.around(num/total_score, decimals=4)
+    percent_score = 100*np.around(num/total_score, decimals=2)
     return percent_score
 
 def get_total_emsc_score(qipi, staff, safety, equip, policy, admin):
@@ -123,7 +123,7 @@ def get_total_emsc_score(qipi, staff, safety, equip, policy, admin):
     calculated separately. As the scores are in percentages, final result
     is a percentage as well
     '''
-    return np.around((qipi+staff+safety+equip+policy+admin)/6, decimals=4)
+    return np.around((qipi+staff+safety+equip+policy+admin)/6, decimals=2)
 
 def plot_triple_bargraph(first_name, first_val_arr, second_name,
                          second_val_arr, third_name, third_val_arr, ylabel,
@@ -218,7 +218,7 @@ def get_cts_score(hosp_df, header):
     :return: percentage score which is nan in case values are nan
     '''
     curr_df = (hosp_df[header].T)[const.hosprow_col]
-    percent_score = 100*np.around(curr_df.sum()/(10*curr_df.count()), decimals=4)
+    percent_score = 100*np.around(curr_df.sum()/(10*curr_df.count()), decimals=2)
     return percent_score
 
 def create_ppt(input, output, report_data, chart):

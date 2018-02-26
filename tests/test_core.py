@@ -60,7 +60,7 @@ def test_get_case_performance_graph():
     fig.savefig(os.path.join(path_dir,'test_plot1.png'))
 
 def test_get_emsc_score():
-    assert core.get_emsc_score(emsc_hosp_df, const.qi_pi, const.qi_pi_score) == 92.86
+    assert core.get_emsc_score(emsc_hosp_df, const.qi_pi, const.qi_pi_score) == 93.0
 
 def test_get_total_emsc_score():
     assert core.get_total_emsc_score(60, 55, 70, 85, 30, 45) == 57.5
