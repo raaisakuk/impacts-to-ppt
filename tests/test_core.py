@@ -55,10 +55,15 @@ def test_get_case_performance_checklist_single_team():
 
 def test_get_case_performance_graph():
     fig = core.get_case_performance_graph('medschool', 'fbd', 50)
-    fig.savefig(os.path.join(path_dir,'test_plot.png'))
+    fig.savefig(os.path.join(path_dir,'test_plot1.png'))
 
 def test_get_emsc_score():
     assert core.get_emsc_score(emsc_hosp_df, const.qi_pi, const.qi_pi_score) == 92.86
 
 def test_get_emsc_score_nan():
     assert core.get_emsc_score(two_rows_df, const.qi_pi, const.qi_pi_score) == -1
+
+def test_plot_triple_bargraph():
+    fig = core.plot_triple_bargraph('medschool', [50,60,30], 'ped', [78,56,35], 'ged',
+                              [88,70,50], 'ylab', 'title', ['a', 'b', 'c'])
+    fig.savefig(os.path.join(path_dir,'test_plot2.png'), bbox_inches='tight')

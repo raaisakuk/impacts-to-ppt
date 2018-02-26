@@ -121,23 +121,41 @@ def get_emsc_score(hosp_df, emsc_header, weights):
     else:
         return percent_score
 
-def plot_triple_bargraph(hosp_name, first_val_arr, second_name,
+def plot_triple_bargraph(first_name, first_val_arr, second_name,
                          second_val_arr, third_name, third_val_arr, ylabel,
-                         title, xlabels, filename):
+                         title, xlabels):
+    '''Plotting grouped bargraph, with three values from different cases
+    grouped together and then plotted for multiple conditions on x axis
+    :param first_name: name corresponding to the first set of values
+    :param first_val_arr: list of values which will form leftmost bars
+    :param second_name: name corresponding to the second set of values
+    :param second_val_arr: list of values which will form middle bars
+    :param third_name: name corresponding to the third set of values
+    :param third_val_arr: list of values which will form rightmost bars
+    :param ylabel: Y axis label
+    :param title: Title of the plot
+    :param xlabels: list of x labels whose length is equal to length of
+    values to be plotted for each set
+    :return: Figure handle
+    '''
+    sns.set_style('whitegrid')
     pos = list(range(len(first_val_arr)))
     width = 0.25
     fig, ax = plt.subplots(figsize=(10, 5))
-    plt.bar(pos, first_val_arr, width, alpha=0.5, color='r', label=hosp_name, capsize=2)
-    plt.bar([p + width for p in pos], second_val_arr, width, alpha=0.5, color='g', label=second_name, capsize=2)
-    plt.bar([p + 2 * width for p in pos], third_val_arr, width, alpha=0.5, color='b', label=third_name, capsize=2)
+    plt.bar(pos, first_val_arr, width, alpha=0.5, color='r',
+            label=first_name, capsize=2)
+    plt.bar([p + width for p in pos], second_val_arr, width, alpha=0.5,
+            color='g', label=second_name, capsize=2)
+    plt.bar([p + 2 * width for p in pos], third_val_arr, width, alpha=0.5,
+            color='b', label=third_name, capsize=2)
     ax.set_title(title)
     ax.set_xticks([p + width for p in pos])
     ax.set_xticklabels(xlabels, rotation="vertical")
     ax.set_ylabel(ylabel)
-    plt.legend([hosp_name, second_name, third_name], loc="lower center", bbox_to_anchor=(1.1, 0.8))
+    plt.legend([first_name, second_name, third_name],
+               loc="lower center", bbox_to_anchor=(1.1, 0.8))
     plt.tight_layout()
-    plt.savefig(filename, bbox_inches='tight')
-
+    return fig
 
 def plot_emsc_graph(hosp_name, qipi, staff, safety, equip, policy, filename):
     ged_scores = [const.ged_score["emsc_qipi"], const.ged_score["emsc_policy"], const.ged_score["emsc_safety"],
