@@ -157,14 +157,18 @@ def plot_triple_bargraph(first_name, first_val_arr, second_name,
     plt.tight_layout()
     return fig
 
-def plot_emsc_graph(hosp_name, qipi, staff, safety, equip, policy, filename):
-    ged_scores = [const.ged_score["emsc_qipi"], const.ged_score["emsc_policy"], const.ged_score["emsc_safety"],
-                  const.ged_score["emsc_staff"], const.ged_score["emsc_equip"]]
-    ped_scores = [const.ped_score["emsc_qipi"], const.ped_score["emsc_policy"], const.ped_score["emsc_safety"],
-                  const.ped_score["emsc_staff"], const.ped_score["emsc_equip"]]
+def plot_emsc_graph(hosp_name, qipi, staff, safety, equip, policy):
+    ged_scores = [const.ged_score["emsc_qipi"], const.ged_score["emsc_policy"],
+                  const.ged_score["emsc_safety"], const.ged_score["emsc_staff"],
+                  const.ged_score["emsc_equip"]]
+    ped_scores = [const.ped_score["emsc_qipi"], const.ped_score["emsc_policy"],
+                  const.ped_score["emsc_safety"], const.ped_score["emsc_staff"],
+                  const.ped_score["emsc_equip"]]
     hosp_scores = [qipi, policy, safety, staff, equip]
-    plot_triple_bargraph(hosp_name, hosp_scores, const.ped_name, ped_scores, const.ged_name, ged_scores, "Score %",
-                         "EMSC Pediatric Readiness", ["Quality Improvement", "Policies/Procedures", "Patient Safety", "Physician/Nurse Staffing", "Equipment and Supplies"], filename)
+    return plot_triple_bargraph(hosp_name, hosp_scores, const.ped_name, ped_scores,
+                         const.ged_name, ged_scores, "Score %", "EMSC Pediatric Readiness",
+                         ["Quality Improvement", "Policies/Procedures", "Patient Safety",
+                          "Physician/Nurse Staffing", "Equipment and Supplies"])
 
 def plot_performance_summary(hosp_name, fbd, sepsis, cardiac_arrest, teamwork, emsc, seizure, filename):
     ged_scores = [const.ged_score["emsc"], const.ged_score["fbd"], const.ged_score["sepsis"],
