@@ -41,7 +41,7 @@ def get_case_performance_data(hosp_df, case_headers):
         df = pd.concat([df, curr_df])
     case_df = df.reset_index()
     case_df.rename(mapper={'index': const.index_name, 'level_0': const.replicates,
-                           0: const.hosp_ans}, axis='columns', inplace=True)
+                           const.hosprow_col: const.hosp_ans}, axis='columns', inplace=True)
     if case_df[const.hosp_ans].isnull().all():
         return -1
     else:

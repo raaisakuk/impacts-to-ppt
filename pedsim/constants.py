@@ -8,6 +8,7 @@
 site_hosp = "Enter the site's Hospital name"
 
 ##
+hosprow_col = 0
 index_name = "questions"
 replicates = "team_num"
 hosp_ans = 'survey_ans'
