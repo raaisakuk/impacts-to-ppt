@@ -74,3 +74,7 @@ def test_plot_triple_bargraph():
 def test_plot_emsc_graph():
     fig = core.plot_emsc_graph('medschool', 60, 55, 70, 85, 30)
     fig.savefig(os.path.join(path_dir, 'test_plot3.png'), bbox_inches='tight')
+
+def test_plot_performance_summary():
+    fig = core.plot_performance_summary('medschool', 60, 55, 70, 85, 30, 45)
+    fig.savefig(os.path.join(path_dir, 'test_plot4.png'), bbox_inches='tight')

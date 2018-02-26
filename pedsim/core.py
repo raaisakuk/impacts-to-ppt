@@ -165,6 +165,16 @@ def plot_triple_bargraph(first_name, first_val_arr, second_name,
     return fig
 
 def plot_emsc_graph(hosp_name, qipi, staff, safety, equip, policy):
+    '''Plot EMSC graph with hospital, GED and PED scores for all EMSC
+    cases
+    :param hosp_name: name of the hospital
+    :param qipi: Quality Improvement score
+    :param staff: Physician/Nurse Staffing score
+    :param safety: Patient Safety score
+    :param equip: Equipment and Supplies score
+    :param policy: Policies/Procedures score
+    :return: Figure handle
+    '''
     ged_scores = [const.ged_score["emsc_qipi"], const.ged_score["emsc_policy"],
                   const.ged_score["emsc_safety"], const.ged_score["emsc_staff"],
                   const.ged_score["emsc_equip"]]
@@ -177,16 +187,30 @@ def plot_emsc_graph(hosp_name, qipi, staff, safety, equip, policy):
                          ["Quality Improvement", "Policies/Procedures", "Patient Safety",
                           "Physician/Nurse Staffing", "Equipment and Supplies"])
 
-def plot_performance_summary(hosp_name, fbd, sepsis, cardiac_arrest, teamwork, emsc, seizure, filename):
+def plot_performance_summary(hosp_name, fbd, sepsis, cardiac_arrest, teamwork, emsc,
+                             seizure):
+    '''Plot case performance summary graph with hospital, GED and PED scores for all
+    cases
+    :param hosp_name: name of the hospital
+    :param fbd: Foreign Body Case Score
+    :param sepsis: Sepsis Case Score
+    :param cardiac_arrest: Cardiac Arrest Case Score
+    :param teamwork: Teamwork Score
+    :param emsc: EMSC Readiness Score
+    :param seizure: Seizure Case Score
+    :return: Figure handle
+    '''
     ged_scores = [const.ged_score["emsc"], const.ged_score["fbd"], const.ged_score["sepsis"],
-                  const.ged_score["seizure"], const.ged_score["cardiac_arrest"], const.ged_score["teamwork"]]
+                  const.ged_score["seizure"], const.ged_score["cardiac_arrest"],
+                  const.ged_score["teamwork"]]
     ped_scores = [const.ped_score["emsc"], const.ped_score["fbd"], const.ped_score["sepsis"],
-                  const.ped_score["seizure"], const.ped_score["cardiac_arrest"], const.ped_score["teamwork"]]
+                  const.ped_score["seizure"], const.ped_score["cardiac_arrest"],
+                  const.ped_score["teamwork"]]
     hosp_scores = [emsc, fbd, sepsis, seizure, cardiac_arrest, teamwork]
-    plot_triple_bargraph(hosp_name, hosp_scores, const.ped_name, ped_scores, const.ged_name, ged_scores,
-                         "Score %", "Performance Summary", ["EMSC Readiness Score", "Foreign Body Case Score",
-                                                      "Sepsis Case Score", "Seizure Case Score", "Cardiac Arrest Score",
-                                                            "Teamwork Score"], filename)
+    return plot_triple_bargraph(hosp_name, hosp_scores, const.ped_name, ped_scores, const.ged_name,
+                                ged_scores, "Score %", "Performance Summary",
+                                ["EMSC Readiness Score", "Foreign Body Case Score", "Sepsis Case Score",
+                                 "Seizure Case Score", "Cardiac Arrest Case Score", "Teamwork Score"])
 
 def get_cts_score(hosp_df, header):
     curr_df = hosp_df[header].T
