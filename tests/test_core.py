@@ -15,6 +15,8 @@ single_row_df = pickle.load(open(os.path.join(path_dir, "xb.p"), "r"))
 hn_nofbddata = pickle.load(open(os.path.join(path_dir, "hn_nofbddata.p"), "r"))
 emsc_hosp_df = pickle.load(open(os.path.join(path_dir, "rt.p"), "r"))
 cts_all_df = pickle.load(open(os.path.join(path_dir, "vm.p"), "r"))
+cts_ind_some_miss = pickle.load(open(os.path.join(path_dir, "af.p"), "r"))
+cts_ind_all = pickle.load(open(os.path.join(path_dir, "dh.p"), "r"))
 
 fbd_df = pickle.load(open(os.path.join(path_dir, "hn_fbd.p"), "r"))
 fbd_all_no = pickle.load(open(os.path.join(path_dir, "fbd_all_no.p"), "r"))
@@ -22,6 +24,7 @@ fbd_all_no = pickle.load(open(os.path.join(path_dir, "fbd_all_no.p"), "r"))
 checklist_multiteams = pickle.load(open(os.path.join(path_dir, "checklist_multiteams.p"), "r"))
 checklist_oneteam = pickle.load(open(os.path.join(path_dir, "checklist_oneteam.p"), "r"))
 #pickle.dump(xb,open("xb.p","w"))
+
 
 def test_get_hospital_data_two_rows():
     input_file = os.path.join(path_dir, "simulated_data_automation.xlsx")
@@ -86,3 +89,12 @@ def test_get_cts_score():
 
 def test_get_cts_score_all_nan():
     assert np.isnan(core.get_cts_score(single_row_df, const.cts_tool_all))
+
+def test_get_cts_ind_score():
+    assert core.get_cts_ind_score(cts_ind_all, const.cts_tool_ind_fbd) == 80.0
+
+def test_get_cts_score_from_parts():
+    assert core.get_cts_score_from_parts(cts_ind_all) == 84.75
+
+def test_get_cts_score_from_parts_some_case_miss():
+    assert core.get_cts_score_from_parts(cts_ind_some_miss) == 29.33

@@ -221,6 +221,39 @@ def get_cts_score(hosp_df, header):
     percent_score = 100*np.around(curr_df.sum()/(10*curr_df.count()), decimals=2)
     return percent_score
 
+def get_cts_ind_score(hosp_df, cts_ind_header):
+    '''Individual CTS score calculated for given CTS case. It is
+    averaged over all teams
+    :param hosp_df: df obtained from get_hospital_data, it has only the row which corresponds
+    to the answers obtained from a particular hospital
+    :param cts_ind_header: col names for the given CTS case
+    :return: percent score which is na if case is empty
+    '''
+    curr_df = get_case_performance_data(hosp_df, cts_ind_header)
+    if isinstance(curr_df, pd.DataFrame):
+        percent_score = 100*np.around(curr_df[const.hosp_ans].sum()/(10*curr_df[const.hosp_ans].count()),
+                                      decimals=2)
+    else:
+        percent_score = np.nan
+    return percent_score
+
+def get_cts_score_from_parts(hosp_df):
+    '''Calculate CTS score by averaging CTS score of ind cases i.e
+    FBD, Cardiac, Seizure, Sepsis
+    :param hosp_df: df obtained from get_hospital_data, it has only the row which corresponds
+    to the answers obtained from a particular hospital
+    :return: avearged percent which takes into account the fact that
+    if a case doesn't exist, don't include it in average
+    '''
+    cardiac = get_cts_ind_score(hosp_df, const.cts_tool_ind_cardiac)
+    fbd = get_cts_ind_score(hosp_df, const.cts_tool_ind_fbd)
+    seiz = get_cts_ind_score(hosp_df, const.cts_tool_ind_seiz)
+    sep = get_cts_ind_score(hosp_df, const.cts_tool_ind_sep)
+    return np.around(np.nanmean([cardiac, fbd, seiz, sep]), decimals=2)
+
+
+##create last slide by having a table with names and scores
+
 def create_ppt(input, output, report_data, chart):
     """ Take the input powerpoint file and use it as the template for the output
     file.
