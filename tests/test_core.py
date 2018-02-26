@@ -60,6 +60,9 @@ def test_get_case_performance_graph():
 def test_get_emsc_score():
     assert core.get_emsc_score(emsc_hosp_df, const.qi_pi, const.qi_pi_score) == 92.86
 
+def test_get_total_emsc_score():
+    assert core.get_total_emsc_score(60, 55, 70, 85, 30, 45) == 57.5
+
 def test_get_emsc_score_nan():
     assert core.get_emsc_score(two_rows_df, const.qi_pi, const.qi_pi_score) == -1
 

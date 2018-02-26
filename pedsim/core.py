@@ -121,6 +121,13 @@ def get_emsc_score(hosp_df, emsc_header, weights):
     else:
         return percent_score
 
+def get_total_emsc_score(qipi, staff, safety, equip, policy, admin):
+    '''Total EMSC Readiness score is average of all the EMSC case scores
+    calculated separately. As the scores are in percentages, final result
+    is a percentage as well
+    '''
+    return np.around((qipi+staff+safety+equip+policy+admin)/6, decimals=4)
+
 def plot_triple_bargraph(first_name, first_val_arr, second_name,
                          second_val_arr, third_name, third_val_arr, ylabel,
                          title, xlabels):
