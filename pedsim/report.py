@@ -21,7 +21,7 @@ core.get_case_performance_checklist(seizure_data[0], seizure_data[1], "seizure.c
 seizure_score = core.get_case_performance_score(seizure_data[0], seizure_data[1])
 core.get_case_performance_graph(hosp_name, "seizure", seizure_score, "seizure.png")
 
-hosp_valdf = core.convert_truth_values_to_num(df)
+
 qipi_val = core.get_emsc_score(hosp_valdf, colname, const.qi_pi, const.qi_pi_score)
 admin_val = core.get_emsc_score(hosp_valdf, colname, const.admin, const.score_admin)
 staff_val = core.get_emsc_score(hosp_valdf, colname, const.staff, const.score_staff)

@@ -1,9 +1,12 @@
+from __future__ import division
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
 
 import constants as const
+import utils
 
 def get_hospital_data(excel_file, hospital_name):
     '''
@@ -95,21 +98,28 @@ def get_case_performance_graph(hosp_name, case_name, case_score):
     plt.tight_layout()
     return fig
 
-def convert_truth_values_to_num(hosp_df):
-    curr_df = hosp_df.replace('Yes', 1)
-    curr_df = curr_df.replace('No', 0)
-    return curr_df
-
-def get_emsc_score(hosp_val_df, col_name, emsc_header, emsc_score):
-    '''assume nan doesn't exist
-    hosp_val_df : yes/no converted to 1/0
+def get_emsc_score(hosp_df, emsc_header, weights):
+    '''Calculate EMSC score for different EMSC cases. Each question is
+    weighted which acts as the score for that questions. A hospital has
+    only one EMSC score and not averaged over teams.
+    :param hosp_df: df obtained from get_hospital_data, it has only the row
+    which corresponds to the answers obtained from a particular hospital
+    :param emsc_header: headers of the EMSC case for which score has to be
+    calculated
+    :param weights: weights corresponding to the above headers in the same
+    order
+    :return: percentage score and -1 if all values nan
     '''
-    total_score = sum(emsc_score)
+    hosp_val_df = utils.convert_truth_values_to_num(hosp_df)
+    total_score = sum(weights)
     num = 0
-    for header, val in zip(emsc_header, emsc_score):
-        num = num + hosp_val_df.get_value(col_name, header)*val
+    for header, val in zip(emsc_header, weights):
+        num = num + hosp_val_df.get_value(const.hosprow_col, header)*val
     percent_score = 100*np.around(num/total_score, decimals=4)
-    return percent_score
+    if np.isnan(percent_score):
+        return -1
+    else:
+        return percent_score
 
 def plot_triple_bargraph(hosp_name, first_val_arr, second_name,
                          second_val_arr, third_name, third_val_arr, ylabel,

@@ -8,9 +8,11 @@ import pedsim.core as core
 import pedsim.constants as const
 
 path_dir = os.path.join(os.path.dirname(__file__))
+
 two_rows_df = pickle.load(open(os.path.join(path_dir, "hn.p"), "r"))
 single_row_df = pickle.load(open(os.path.join(path_dir, "xb.p"), "r"))
 hn_nofbddata = pickle.load(open(os.path.join(path_dir, "hn_nofbddata.p"), "r"))
+emsc_hosp_df = pickle.load(open(os.path.join(path_dir, "rt.p"), "r"))
 
 fbd_df = pickle.load(open(os.path.join(path_dir, "hn_fbd.p"), "r"))
 fbd_all_no = pickle.load(open(os.path.join(path_dir, "fbd_all_no.p"), "r"))
@@ -54,3 +56,9 @@ def test_get_case_performance_checklist_single_team():
 def test_get_case_performance_graph():
     fig = core.get_case_performance_graph('medschool', 'fbd', 50)
     fig.savefig(os.path.join(path_dir,'test_plot.png'))
+
+def test_get_emsc_score():
+    assert core.get_emsc_score(emsc_hosp_df, const.qi_pi, const.qi_pi_score) == 92.86
+
+def test_get_emsc_score_nan():
+    assert core.get_emsc_score(two_rows_df, const.qi_pi, const.qi_pi_score) == -1
