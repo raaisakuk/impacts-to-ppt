@@ -14,6 +14,7 @@ two_rows_df = pickle.load(open(os.path.join(path_dir, "hn.p"), "r"))
 single_row_df = pickle.load(open(os.path.join(path_dir, "xb.p"), "r"))
 hn_nofbddata = pickle.load(open(os.path.join(path_dir, "hn_nofbddata.p"), "r"))
 emsc_hosp_df = pickle.load(open(os.path.join(path_dir, "rt.p"), "r"))
+cts_all_df = pickle.load(open(os.path.join(path_dir, "vm.p"), "r"))
 
 fbd_df = pickle.load(open(os.path.join(path_dir, "hn_fbd.p"), "r"))
 fbd_all_no = pickle.load(open(os.path.join(path_dir, "fbd_all_no.p"), "r"))
@@ -79,3 +80,9 @@ def test_plot_emsc_graph():
 def test_plot_performance_summary():
     fig = core.plot_performance_summary('medschool', 60, 55, 70, 85, 30, 45)
     fig.savefig(os.path.join(path_dir, 'test_plot4.png'), bbox_inches='tight')
+
+def test_get_cts_score():
+    assert core.get_cts_score(cts_all_df, const.cts_tool_all) == 80.0
+
+def test_get_cts_score_all_nan():
+    assert np.isnan(core.get_cts_score(single_row_df, const.cts_tool_all))

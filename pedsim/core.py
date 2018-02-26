@@ -210,7 +210,14 @@ def plot_performance_summary(hosp_name, fbd, sepsis, cardiac_arrest, teamwork, e
                                  "Seizure Case Score", "Cardiac Arrest Case Score", "Teamwork Score"])
 
 def get_cts_score(hosp_df, header):
-    curr_df = hosp_df[header].T
+    '''CTS score for the case when CTS values for different cases are combined
+    in one set of questions
+    :param hosp_df: df obtained from get_hospital_data, it has only the row which corresponds
+    to the answers obtained from a particular hospital
+    :param header: col names for CTS questions
+    :return: percentage score which is nan in case values are nan
+    '''
+    curr_df = (hosp_df[header].T)[const.hosprow_col]
     percent_score = 100*np.around(curr_df.sum()/(10*curr_df.count()), decimals=4)
     return percent_score
 
