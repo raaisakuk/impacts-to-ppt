@@ -108,6 +108,24 @@ def get_case_performance_graph(hosp_name, case_name, case_score):
     plt.tight_layout()
     return fig
 
+def create_case_df_fig(hosp_name, hosp_df, case_header, case_name):
+    '''Get case performance checklist and figure from hospital info
+    :param hosp_name: Name of the hospital
+    :param hosp_df: df obtained from get_hospital_data, it has only
+    the row which corresponds to the answers obtained from a
+    particular hospital
+    :param case_header: Questions for a particular case form the column
+    names and this list contains those column names
+    :param case_name: Name of the case to get ged and ped score from
+    constants
+    :return: case checklist, case performance fig, case score
+    '''
+    data = get_case_performance_data(hosp_df, case_header)
+    df = get_case_performance_checklist(data)
+    score = get_case_performance_score(data)
+    fig = get_case_performance_graph(hosp_name, case_name, score)
+    return df, fig, score
+
 def get_emsc_score(hosp_df, emsc_header, weights):
     '''Calculate EMSC score for different EMSC cases. Each question is
     weighted which acts as the score for that questions. A hospital has
