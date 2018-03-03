@@ -302,17 +302,7 @@ def get_overall_performance_scores(hosp_df):
                       const.cts_title: cts_score}
     return overall_scores
 
-def create_ppt(input, output, report_data, chart):
-    """ Take the input powerpoint file and use it as the template for the output
-    file.
-    """
-    prs = Presentation(input)
-    # Use the output from analyze_ppt to understand which layouts and placeholders
-    # to use
-    # Create a title slide first
-    title_slide_layout = prs.slide_layouts[0]
-    slide = prs.slides.add_slide(title_slide_layout)
-    title = slide.shapes.title
-    subtitle = slide.placeholders[1]
-    title.text = "Quarterly Report"
-    subtitle.text = "Generated on {:%m-%d-%Y}".format(date.today())
+def create_overall_df(overall_scores_dict):
+    df = pd.DataFrame(list(overall_scores_dict.iteritems()),
+                        columns=['Metric', 'Score'])
+    return df
