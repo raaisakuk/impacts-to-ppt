@@ -1,53 +1,37 @@
+import sys
+
 import core
 import constants as const
+import pptoutput as ppt
 
-hosp_name = "MedSchool"
-df = core.get_hospital_data("C:\Users\Raaisa\OneDrive\Yale\Sample_report_out_-_for_automation\Demo for Raaisa.xlsx",
-                            hosp_name)
+if __name__ == "__main__":
+    hosp_name = sys.argv[1]
+    path = sys.argv[2]
+    df = core.get_hospital_data(path, hosp_name)
 
-fbd_data = core.get_case_performance_data(df, const.foreign_body_case)
-#sepsis_data = core.get_case_performance_data(df, const.sepsis)
-seizure_data = core.get_case_performance_data(df, const.seizure)
-
-core.get_case_performance_checklist(fbd_data[0], fbd_data[1], "fbd.csv")
-fbd_score = core.get_case_performance_score(fbd_data[0], fbd_data[1])
-core.get_case_performance_graph(hosp_name, "fbd", fbd_score, "fbd.png")
-colname = fbd_data[1]
-# core.get_case_performance_checklist(sepsis_data[0], sepsis_data[1], "sepsis.csv")
-# sepsis_score = core.get_case_performance_score(sepsis_data[0], sepsis_data[1])
-# core.get_case_performance_graph(hosp_name, "sepsis", sepsis_score, "sepsis.png")
-
-core.get_case_performance_checklist(seizure_data[0], seizure_data[1], "seizure.csv")
-seizure_score = core.get_case_performance_score(seizure_data[0], seizure_data[1])
-core.get_case_performance_graph(hosp_name, "seizure", seizure_score, "seizure.png")
+fbd_checklist, fbd_fig, fbd_score = core.create_case_df_fig(hosp_name, df, const.foreign_body_case, 'fbd')
+sep_checklist, sep_fig, sep_score = core.create_case_df_fig(hosp_name, df, const.sepsis, 'sepsis')
+sei_checklist, sei_fig, sei_score = core.create_case_df_fig(hosp_name, df, const.seizure, 'seizure')
+cdar_checklist, cdar_fig, cdar_score = core.create_case_df_fig(hosp_name, df, const.cardiac_arrest, 'cardiac_arrest')
 
 
-qipi_val = core.get_emsc_score(hosp_valdf, colname, const.qi_pi, const.qi_pi_score)
-admin_val = core.get_emsc_score(hosp_valdf, colname, const.admin, const.score_admin)
-staff_val = core.get_emsc_score(hosp_valdf, colname, const.staff, const.score_staff)
-safety_val = core.get_emsc_score(hosp_valdf, colname, const.safety, const.safety_score)
-policy_val = core.get_emsc_score(hosp_valdf, colname, const.policy, const.policy_score)
-equip_val = core.get_emsc_score(hosp_valdf, colname, const.equip, const.equip_score)
+qipi_val = core.get_emsc_score(df, const.qi_pi, const.qi_pi_score)
+admin_val = core.get_emsc_score(df, const.admin, const.score_admin)
+staff_val = core.get_emsc_score(df, const.staff, const.score_staff)
+safety_val = core.get_emsc_score(df, const.safety, const.safety_score)
+policy_val = core.get_emsc_score(df, const.policy, const.policy_score)
+equip_val = core.get_emsc_score(df, const.equip, const.equip_score)
 
-core.plot_emsc_graph(hosp_name, qipi_val, staff_val, safety_val, equip_val, policy_val, "emsc.png")
+emsc_fig = core.plot_emsc_graph(hosp_name, qipi_val, staff_val, safety_val, equip_val, policy_val)
+emsc_score = core.get_total_emsc_score(qipi_val, staff_val, safety_val, equip_val, policy_val, admin_val)
+emsc_case_fig = core.get_case_performance_graph(hosp_name, 'emsc', emsc_score)
 
-weight_data = core.get_case_performance_data(df, const.weight)
-disposition = core.get_case_performance_data(df, const.disposition)
-fam_pre = core.get_case_performance_data(df, const.family_pres)
-fam_care = core.get_case_performance_data(df, const.family_care)
+overall_dict = core.get_overall_performance_scores(df)
+cts_score = overall_dict[const.cts_title]
+pfmnc_fig = core.plot_performance_summary(hosp_name, fbd_score, sep_score, cdar_score, cts_score, emsc_score, sei_score)
 
-## . creating issues
-core.get_case_performance_checklist(weight_data[0], colname, "weight.csv")
-print core.get_case_performance_score(weight_data[0], colname)
+overall_df = core.create_overall_df(overall_dict)
 
-core.get_case_performance_checklist(disposition[0], colname, "disposition.csv")
-print core.get_case_performance_score(disposition[0], colname)
-
-core.get_case_performance_checklist(fam_pre[0], colname, "fam_pre.csv")
-print core.get_case_performance_score(fam_pre[0], colname)
-
-core.get_case_performance_checklist(fam_care[0], colname, "fam_care.csv")
-print core.get_case_performance_score(fam_care[0], colname)
-
-print core.get_cts_score(df, const.cts_tool_all)
-
+ppt.create_ppt(hosp_name+'.pptx', [fbd_fig, cdar_fig, sep_fig, sei_fig],
+               [fbd_checklist, cdar_checklist, sep_checklist, sei_checklist],
+               pfmnc_fig, emsc_case_fig, emsc_fig, overall_df)
