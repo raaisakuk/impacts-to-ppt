@@ -85,7 +85,7 @@ family_pres_title = 'Family Presence'
 
 family_care = ["Cardiac arrest case - Family centered care Team interacted with parent throughout",
               "Foreign body case - Family centered care (Team interacted with parent throughout case)",
-              "Seizure case - Family presence   Parent asked to stay",
+              "Seizure case - Family centered care (Team interacted with parent throughout case)",
               "Sepsis case - Family centered care  Team interacted with parent throughout case"]
 family_care_title = 'Family centered care'
 
