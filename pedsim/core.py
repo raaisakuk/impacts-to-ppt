@@ -60,11 +60,14 @@ def get_case_performance_score(case_df):
     for all teams for a particular case
     :return: percentage score
     '''
-    all_scores = case_df[const.hosp_ans].value_counts(True)
-    try:
-        return 100 * (np.around(all_scores.loc['Yes'], decimals=2))
-    except KeyError:
-        return 100 - 100 * (np.around(all_scores.loc['No'], decimals=2))
+    if isinstance(case_df, pd.DataFrame):
+        all_scores = case_df[const.hosp_ans].value_counts(True)
+        try:
+            return 100 * (np.around(all_scores.loc['Yes'], decimals=2))
+        except KeyError:
+            return 100 - 100 * (np.around(all_scores.loc['No'], decimals=2))
+    else:
+        return np.nan
 
 def get_case_performance_checklist(case_df):
     '''This checklist contains Question and corresponding answers for each team. It
@@ -73,11 +76,13 @@ def get_case_performance_checklist(case_df):
     for all teams for a particular case
     :return: dataframe of checklist formatted properly
     '''
-    case_df[const.index_name] = case_df[const.index_name].apply(lambda x: x.split('.')[0])
-    case_df = case_df.groupby([const.index_name]).\
-        apply(lambda x: pd.Series(x[const.hosp_ans].dropna().values))\
-        .rename(columns=const.team_dict)
-    return case_df.reset_index(level=[const.index_name])
+    if isinstance(case_df, pd.DataFrame):
+        case_df = case_df.groupby([const.index_name]).\
+            apply(lambda x: pd.Series(x[const.hosp_ans].dropna().values))\
+            .rename(columns=const.team_dict)
+        return case_df.reset_index(level=[const.index_name])
+    else:
+        return np.nan
 
 def get_case_performance_graph(hosp_name, case_name, case_score):
     '''Plot bar graph for case performance score with GED and PED scores
