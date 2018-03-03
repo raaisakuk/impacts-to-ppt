@@ -18,7 +18,6 @@ team_dict = {0: "Team 1", 1: "Team 2", 2: "Team 3",
              3: "Team 4", 4: "Team 5", 5: "Team 6"}
 
 ##Headers for score calculations##
-
 foreign_body_case = ["Foreign body case - Airway assessed (Look in mouth in first 3 min)",
                      "Foreign body case - Breathing assessed (Listen to lungs with stethoscope in 1st 3 min)",
                      "Foreign body case - Proper size McGill forceps used to remove foreign body (Pediatric not adult)  0 Check if finger used to remove",
@@ -71,17 +70,24 @@ weight = ["Foreign body case - Proper weight assessed 6kg (4.8-7.2)",
           "Sepsis case - Proper weight assessed 6 kg (4.8-7.2)",
           "Seizure case - Proper weight assessed 6 kg (4.8-7.2)",
           "Cardiac arrest case - Proper weight assessed 16-24 kg"]
+weight_title = 'Proper weight assessed'
+
 disposition = ["Sepsis case - Disposition: contacted PICU/transport to arrange xfer",
                "Seizure case - Disposition: plan to admit/transfer verbalized",
                "Cardiac arrest case - Disposition: contacted PICU/transport to arrange xfer"]
+disposition_title = 'Disposition'
+
 family_pres = ["Foreign body case - Family presence   (Parent asked to stay)",
               "Sepsis case - Family presence    Parent asked to stay",
               "Seizure case - Family presence   Parent asked to stay",
               "Cardiac arrest case - Family presence   Parent asked to stay"]
+family_pres_title = 'Family Presence'
+
 family_care = ["Cardiac arrest case - Family centered care Team interacted with parent throughout",
               "Foreign body case - Family centered care (Team interacted with parent throughout case)",
               "Seizure case - Family presence   Parent asked to stay",
               "Sepsis case - Family centered care  Team interacted with parent throughout case"]
+family_care_title = 'Family centered care'
 
 ##CTS Tool
 cts_tool_all = ["Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Overall: How would you rate teamwork during this delivery/emergency?",
@@ -164,6 +170,7 @@ cts_tool_ind_cardiac = ["Cardiac Arrest - Clinical Teamwork Scale (CTS) Not rele
                 "Cardiac Arrest - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Role Responsibility : Perform as a helper",
                 "Cardiac Arrest - Clinical Teamwork Scale (CTS) Not relevant- The task was not applicable to the scenario - Patient friendly"]
 
+cts_title = 'Teamwork Evaluation: CTS Tool'
 
 ##EMSC
 admin = ["11. Does your hospital have a physician coordinator? (e.g., oversees quality improvement, collaborates with nursing, ensures pediatric skills of staff, develops and periodically reviews policies)",
