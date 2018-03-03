@@ -279,8 +279,28 @@ def get_cts_score_from_parts(hosp_df):
     sep = get_cts_ind_score(hosp_df, const.cts_tool_ind_sep)
     return np.around(np.nanmean([cardiac, fbd, seiz, sep]), decimals=2)
 
+def get_overall_performance_scores(hosp_df):
+    '''Get scores for overall performance metrices
+    :param hosp_df: df obtained from get_hospital_data, it has only
+    the row which corresponds to the answers obtained from a
+    particular hospital
+    :return: dictionary with name -> score
+    '''
+    weight_data = get_case_performance_data(hosp_df, const.weight)
+    disposition = get_case_performance_data(hosp_df, const.disposition)
+    fam_pre = get_case_performance_data(hosp_df, const.family_pres)
+    fam_care = get_case_performance_data(hosp_df, const.family_care)
 
-##create last slide by having a table with names and scores
+    cts_score = get_cts_score(hosp_df, const.cts_tool_all)
+    if np.isnan(cts_score):
+       cts_score = get_cts_score_from_parts(hosp_df)
+
+    overall_scores = {const.weight_title: get_case_performance_score(weight_data),
+                      const.disposition_title: get_case_performance_score(disposition),
+                      const.family_pres_title: get_case_performance_score(fam_pre),
+                      const.family_care_title: get_case_performance_score(fam_care),
+                      const.cts_title: cts_score}
+    return overall_scores
 
 def create_ppt(input, output, report_data, chart):
     """ Take the input powerpoint file and use it as the template for the output
