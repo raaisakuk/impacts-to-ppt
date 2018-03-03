@@ -94,10 +94,12 @@ def get_case_performance_graph(hosp_name, case_name, case_score):
     sns.set_style('whitegrid')
     fig, ax = plt.subplots(figsize=(10, 5))
     pos = [0, 1, 2]
+    width = 0.25
     y_vals = [const.ged_score[case_name], const.ped_score[case_name], case_score]
     x_vals = [const.ged_name, const.ped_name, hosp_name]
-    plt.bar(pos, y_vals, align='center', alpha=0.5, color=sns.color_palette("muted"))
+    plt.bar(pos, y_vals, width, align='center', alpha=0.5, color=sns.color_palette("muted"))
     plt.xticks(pos, x_vals)
+    ax.set_xticklabels(x_vals, rotation="vertical")
     plt.ylabel('%')
     plt.title('Case Performance| '+const.case_name_dict[case_name])
     plt.ylim([0, 100])
