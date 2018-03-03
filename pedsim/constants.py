@@ -283,4 +283,4 @@ ped_score = {"sepsis": 100, "fbd": 80, "seizure": 78, "cardiac_arrest": 67, "tea
        "emsc_qipi": 81, "emsc_staff": 85, "emsc_safety": 76, "emsc_equip": 98, "emsc_policy": 92}
 
 case_name_dict = {'sepsis': 'Sepsis', 'cardiac_arrest': 'Cardiac Arrest', 'seizure': 'Seizure',
-                  'fbd': 'Foreign Body'}
+                  'fbd': 'Foreign Body', 'emsc':'EMSC Readiness'}
