@@ -1,4 +1,5 @@
 from __future__ import division
+import re
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -43,6 +44,8 @@ def get_case_performance_data(hosp_df, case_headers):
         curr_df = hosp_df.filter(like=case_headers[i]).T.reset_index()
         df = pd.concat([df, curr_df])
     case_df = df.reset_index()
+    case_df['index'] = case_df['index'].apply(lambda x: re.split('[.][0-9]$', x)[0])
+    case_df = case_df[case_df['index'].isin(case_headers)]
     case_df.rename(mapper={'index': const.index_name, 'level_0': const.replicates,
                            const.hosprow_col: const.hosp_ans}, axis='columns', inplace=True)
     if case_df[const.hosp_ans].isnull().all():
