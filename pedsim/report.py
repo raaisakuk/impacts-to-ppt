@@ -1,3 +1,4 @@
+import os
 import sys
 
 import core
@@ -6,8 +7,9 @@ import pptoutput as ppt
 
 if __name__ == "__main__":
     hosp_name = sys.argv[1]
-    path = sys.argv[2]
-    df = core.get_hospital_data(path, hosp_name)
+    survey_file = sys.argv[2]
+    output_ppt_path = sys.argv[3]
+    df = core.get_hospital_data(survey_file, hosp_name)
 
 fbd_checklist, fbd_fig, fbd_score = core.create_case_df_fig(hosp_name, df, const.foreign_body_case, 'fbd')
 sep_checklist, sep_fig, sep_score = core.create_case_df_fig(hosp_name, df, const.sepsis, 'sepsis')
@@ -32,6 +34,6 @@ pfmnc_fig = core.plot_performance_summary(hosp_name, fbd_score, sep_score, cdar_
 
 overall_df = core.create_overall_df(overall_dict)
 
-ppt.create_ppt(hosp_name+'.pptx', [fbd_fig, cdar_fig, sep_fig, sei_fig],
+ppt.create_ppt(os.path.join(output_ppt_path, hosp_name+'.pptx'), [fbd_fig, cdar_fig, sep_fig, sei_fig],
                [fbd_checklist, cdar_checklist, sep_checklist, sei_checklist],
                pfmnc_fig, emsc_case_fig, emsc_fig, overall_df)
