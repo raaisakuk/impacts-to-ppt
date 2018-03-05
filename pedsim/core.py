@@ -303,6 +303,10 @@ def get_overall_performance_scores(hosp_df):
     return overall_scores
 
 def create_overall_df(overall_scores_dict):
+    '''Create df with overall metric names and scores
+    :param overall_scores_dict: dict with name -> scores
+    :return: dataframe with columns Metric and Score
+    '''
     df = pd.DataFrame(list(overall_scores_dict.iteritems()),
                         columns=['Metric', 'Score'])
     return df
