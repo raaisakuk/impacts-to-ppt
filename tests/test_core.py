@@ -3,7 +3,6 @@ import pickle
 
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 
 import pedsim.core as core
 import pedsim.constants as const
@@ -17,18 +16,18 @@ emsc_hosp_df = pickle.load(open(os.path.join(path_dir, "rt.p"), "r"))
 cts_all_df = pickle.load(open(os.path.join(path_dir, "vm.p"), "r"))
 cts_ind_some_miss = pickle.load(open(os.path.join(path_dir, "af.p"), "r"))
 cts_ind_all = pickle.load(open(os.path.join(path_dir, "dh.p"), "r"))
+overall_scores_df = pickle.load(open(os.path.join(path_dir, "overall_score.p"), "r"))
 
-fbd_df = pickle.load(open(os.path.join(path_dir, "hn_fbd.p"), "r"))
+fbd_df = pickle.load(open(os.path.join(path_dir, "fbd.p"), "r"))
 fbd_all_no = pickle.load(open(os.path.join(path_dir, "fbd_all_no.p"), "r"))
 
 checklist_multiteams = pickle.load(open(os.path.join(path_dir, "checklist_multiteams.p"), "r"))
 checklist_oneteam = pickle.load(open(os.path.join(path_dir, "checklist_oneteam.p"), "r"))
 #pickle.dump(xb,open("xb.p","w"))
 
-
 def test_get_hospital_data_two_rows():
     input_file = os.path.join(path_dir, "simulated_data_automation.xlsx")
-    hn = core.get_hospital_data(input_file,"hn")
+    hn = core.get_hospital_data(input_file, "hn")
     assert pd.DataFrame.equals(hn, two_rows_df)
 
 def test_get_hospital_data_single_row():
@@ -49,6 +48,10 @@ def test_get_case_performance_score():
 
 def test_get_case_performance_score_all_no():
     assert core.get_case_performance_score(fbd_all_no) == 0
+
+def test_get_case_performance_score_all_nan():
+    score = core.get_case_performance_score(np.nan)
+    assert np.isnan(score)
 
 def test_get_case_performance_checklist_multiple_teams():
     checklist = core.get_case_performance_checklist(fbd_df)
@@ -98,3 +101,9 @@ def test_get_cts_score_from_parts():
 
 def test_get_cts_score_from_parts_some_case_miss():
     assert core.get_cts_score_from_parts(cts_ind_some_miss) == 29.33
+
+def test_get_overall_performance_scores():
+    score_dict = core.get_overall_performance_scores(overall_scores_df)
+    assert all([score_dict['Family Presence'] == 75.0, score_dict['Proper weight assessed'] == 75.0,
+                score_dict['Disposition'] == 100.0, score_dict['Family centered care'] == 75.0,
+               np.isnan(score_dict['Teamwork Evaluation: CTS Tool'])])

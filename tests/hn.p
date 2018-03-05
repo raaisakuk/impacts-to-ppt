@@ -231,7 +231,7 @@ aVSepsis case - Began oxygen non-rebreather in first 3 min. Mention if other equ
 p112
 aVSepsis case - Began oxygen non-rebreather in first 3 min. Mention if other equipment (nasal cannula; simple mask; nothing) was used - Text
 p113
-aVSepsis case - â\u2030¥360 CC NS delivered in first 15 min. Total fluids given over 15 min case in mL:
+aVSepsis case - 360 CC NS delivered in first 15 min. Total fluids given over 15 min case in mL:
 p114
 aVSepsis case - â\u2030¥360 CC NS delivered in first 15 min. Total fluids given over 15 min case in mL: - Text
 p115
@@ -283,7 +283,7 @@ aVSeizure case - Disposition: plan to admit/transfer verbalized
 p138
 aVSeizure case - Family presence   Parent asked to stay
 p139
-aVSeizure case - Family centered care Team interacted with parent throughout case
+aVSeizure case - Family centered care (Team interacted with parent throughout case)
 p140
 aVSeizure case - Latent safety threats? -
 p141
@@ -305,7 +305,7 @@ aVCardiac arrest case - IV/IO placed
 p149
 aVCardiac arrest case - PEA verbalized
 p150
-aVCardiac arrest case - Epinephrine #1 given 1.6 â\u20ac\u201c2.4 mL IV 1:10K ETT 1:1K< 5mincase
+aVCardiac arrest case - Epinephrine 1 given 1.6-2.4 mL IV 1:10K ETT 1:1K< 5mincase
 p151
 aVCardiac arrest case - Epinephrine #2 given 1.6 â\u20ac\u201c2.4 mL IV 1:10K ETT 1:1K 3-5 min after first epi
 p152
@@ -481,7 +481,7 @@ aVSepsis case - Began oxygen non-rebreather in first 3 min. Mention if other equ
 p237
 aVSepsis case - Began oxygen non-rebreather in first 3 min. Mention if other equipment (nasal cannula; simple mask; nothing) was used - Text.1
 p238
-aVSepsis case - â\u2030¥360 CC NS delivered in first 15 min. Total fluids given over 15 min case in mL:.1
+aVSepsis case - 360 CC NS delivered in first 15 min. Total fluids given over 15 min case in mL:.1
 p239
 aVSepsis case - â\u2030¥360 CC NS delivered in first 15 min. Total fluids given over 15 min case in mL: - Text.1
 p240
@@ -533,7 +533,7 @@ aVSeizure case - Disposition: plan to admit/transfer verbalized.1
 p263
 aVSeizure case - Family presence   Parent asked to stay.1
 p264
-aVSeizure case - Family centered care: Team interacted with parent throughout case
+aVSeizure case - Family centered care (Team interacted with parent throughout case).1
 p265
 aVSeizure case - Latent safety threats? -.1
 p266
@@ -555,9 +555,9 @@ aVCardiac arrest case - IV/IO placed.1
 p274
 aVCardiac arrest case - PEA verbalized.1
 p275
-aVCardiac arrest case - Epinephrine #1 given 1.6 â\u20ac\u201c2.4 mL IV 1:10K ETT 1:1K< 5mincase.1
+aVCardiac arrest case - Epinephrine 1 given 1.6-2.4 mL IV 1:10K ETT 1:1K< 5mincase.1
 p276
-aVCardiac arrest case - Epinephrine #2 given 1.6 â\u20ac\u201c2.4 mL IV 1:10K ETT 1:1K 3-5 min after first epi.1
+aVCardiac arrest case - Epinephrine 2 given 1.6-2.4 mL IV 1:10K ETT 1:1K 3-5 min after first epi
 p277
 aVCardiac arrest case - Continuous ETCO2 monitoring.1
 p278
@@ -731,7 +731,7 @@ aVSepsis case - Began oxygen non-rebreather in first 3 min. Mention if other equ
 p362
 aVSepsis case - Began oxygen non-rebreather in first 3 min. Mention if other equipment (nasal cannula; simple mask; nothing) was used - Text.2
 p363
-aVSepsis case - â\u2030¥360 CC NS delivered in first 15 min. Total fluids given over 15 min case in mL:.2
+aVSepsis case - 360 CC NS delivered in first 15 min. Total fluids given over 15 min case in mL:.2
 p364
 aVSepsis case - â\u2030¥360 CC NS delivered in first 15 min. Total fluids given over 15 min case in mL: - Text.2
 p365
@@ -783,7 +783,7 @@ aVSeizure case - Disposition: plan to admit/transfer verbalized.2
 p388
 aVSeizure case - Family presence   Parent asked to stay.2
 p389
-aVSeizure case - Family centered care (Team interacted with parent throughout case)
+aVSeizure case - Family centered care (Team interacted with parent throughout case).2
 p390
 aVSeizure case - Latent safety threats? -.2
 p391
@@ -805,9 +805,9 @@ aVCardiac arrest case - IV/IO placed.2
 p399
 aVCardiac arrest case - PEA verbalized.2
 p400
-aVCardiac arrest case - Epinephrine #1 given 1.6 â\u20ac\u201c2.4 mL IV 1:10K ETT 1:1K< 5mincase.2
+aVCardiac arrest case - Epinephrine 1 given 1.6-2.4 mL IV 1:10K ETT 1:1K< 5mincase.2
 p401
-aVCardiac arrest case - Epinephrine #2 given 1.6 â\u20ac\u201c2.4 mL IV 1:10K ETT 1:1K 3-5 min after first epi.2
+aVCardiac arrest case - Epinephrine 2 given 1.6-2.4 mL IV 1:10K ETT 1:1K 3-5 min after first epi.1
 p402
 aVCardiac arrest case - Continuous ETCO2 monitoring.2
 p403
@@ -979,7 +979,7 @@ aVSepsis case - Began oxygen non-rebreather in first 3 min. Mention if other equ
 p486
 aVSepsis case - Began oxygen non-rebreather in first 3 min. Mention if other equipment (nasal cannula; simple mask; nothing) was used - Text.3
 p487
-aVSepsis case - â\u2030¥360 CC NS delivered in first 15 min. Total fluids given over 15 min case in mL:.3
+aVSepsis case - 360 CC NS delivered in first 15 min. Total fluids given over 15 min case in mL:.3
 p488
 aVSepsis case - â\u2030¥360 CC NS delivered in first 15 min. Total fluids given over 15 min case in mL: - Text.3
 p489
@@ -1031,7 +1031,7 @@ aVSeizure case - Disposition: plan to admit/transfer verbalized.3
 p512
 aVSeizure case - Family presence   Parent asked to stay.3
 p513
-aVSeizure case - Family centered care: Team interacted with parent throughout case.1
+aVSeizure case - Family centered care (Team interacted with parent throughout case).3
 p514
 aVSeizure case - Latent safety threats? -.3
 p515
@@ -1053,9 +1053,9 @@ aVCardiac arrest case - IV/IO placed.3
 p523
 aVCardiac arrest case - PEA verbalized.3
 p524
-aVCardiac arrest case - Epinephrine #1 given 1.6 â\u20ac\u201c2.4 mL IV 1:10K ETT 1:1K< 5mincase.3
+aVCardiac arrest case - Epinephrine 1 given 1.6-2.4 mL IV 1:10K ETT 1:1K< 5mincase.3
 p525
-aVCardiac arrest case - Epinephrine #2 given 1.6 â\u20ac\u201c2.4 mL IV 1:10K ETT 1:1K 3-5 min after first epi.3
+aVCardiac arrest case - Epinephrine 2 given 1.6-2.4 mL IV 1:10K ETT 1:1K 3-5 min after first epi.2
 p526
 aVCardiac arrest case - Continuous ETCO2 monitoring.3
 p527
@@ -1227,7 +1227,7 @@ aVSepsis case - Began oxygen non-rebreather in first 3 min. Mention if other equ
 p610
 aVSepsis case - Began oxygen non-rebreather in first 3 min. Mention if other equipment (nasal cannula; simple mask; nothing) was used - Text.4
 p611
-aVSepsis case - â\u2030¥360 CC NS delivered in first 15 min. Total fluids given over 15 min case in mL:.4
+aVSepsis case - 360 CC NS delivered in first 15 min. Total fluids given over 15 min case in mL:.4
 p612
 aVSepsis case - â\u2030¥360 CC NS delivered in first 15 min. Total fluids given over 15 min case in mL: - Text.4
 p613
@@ -1279,7 +1279,7 @@ aVSeizure case - Disposition: plan to admit/transfer verbalized.4
 p636
 aVSeizure case - Family presence   Parent asked to stay.4
 p637
-aVSeizure case - Family centered care: Team interacted with parent throughout case.2
+aVSeizure case - Family centered care (Team interacted with parent throughout case).4
 p638
 aVSeizure case - Latent safety threats? -.4
 p639
@@ -1301,9 +1301,9 @@ aVCardiac arrest case - IV/IO placed.4
 p647
 aVCardiac arrest case - PEA verbalized.4
 p648
-aVCardiac arrest case - Epinephrine #1 given 1.6 â\u20ac\u201c2.4 mL IV 1:10K ETT 1:1K< 5mincase.4
+aVCardiac arrest case - Epinephrine 1 given 1.6-2.4 mL IV 1:10K ETT 1:1K< 5mincase.4
 p649
-aVCardiac arrest case - Epinephrine #2 given 1.6 â\u20ac\u201c2.4 mL IV 1:10K ETT 1:1K 3-5 min after first epi.4
+aVCardiac arrest case - Epinephrine 2 given 1.6-2.4 mL IV 1:10K ETT 1:1K 3-5 min after first epi.3
 p650
 aVCardiac arrest case - Continuous ETCO2 monitoring.4
 p651
@@ -1475,7 +1475,7 @@ aVSepsis case - Began oxygen non-rebreather in first 3 min. Mention if other equ
 p734
 aVSepsis case - Began oxygen non-rebreather in first 3 min. Mention if other equipment (nasal cannula; simple mask; nothing) was used - Text.5
 p735
-aVSepsis case - â\u2030¥360 CC NS delivered in first 15 min. Total fluids given over 15 min case in mL:.5
+aVSepsis case - 360 CC NS delivered in first 15 min. Total fluids given over 15 min case in mL:.5
 p736
 aVSepsis case - â\u2030¥360 CC NS delivered in first 15 min. Total fluids given over 15 min case in mL: - Text.5
 p737
@@ -1527,7 +1527,7 @@ aVSeizure case - Disposition: plan to admit/transfer verbalized.5
 p760
 aVSeizure case - Family presence   Parent asked to stay.5
 p761
-aVSeizure case - Family centered care: Team interacted with parent throughout case.3
+aVSeizure case - Family centered care (Team interacted with parent throughout case).5
 p762
 aVSeizure case - Latent safety threats? -.5
 p763
@@ -1549,9 +1549,9 @@ aVCardiac arrest case - IV/IO placed.5
 p771
 aVCardiac arrest case - PEA verbalized.5
 p772
-aVCardiac arrest case - Epinephrine #1 given 1.6 â\u20ac\u201c2.4 mL IV 1:10K ETT 1:1K< 5mincase.5
+aVCardiac arrest case - Epinephrine 1 given 1.6-2.4 mL IV 1:10K ETT 1:1K< 5mincase.5
 p773
-aVCardiac arrest case - Epinephrine #2 given 1.6 â\u20ac\u201c2.4 mL IV 1:10K ETT 1:1K 3-5 min after first epi.5
+aVCardiac arrest case - Epinephrine 2 given 1.6-2.4 mL IV 1:10K ETT 1:1K 3-5 min after first epi.4
 p774
 aVCardiac arrest case - Continuous ETCO2 monitoring.5
 p775
