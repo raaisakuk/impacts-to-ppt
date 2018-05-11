@@ -65,7 +65,8 @@ def df_to_table(slide, df, left, top, width, height, colnames=None):
     for col_index, col_name in enumerate(colnames):
         # Column names can be tuples
         if not isinstance(col_name, str):
-            col_name = " ".join(col_name)
+            # col_name = " ".join(col_name)
+            col_name = str(col_name)
         res.table.cell(0, col_index).text = col_name
 
     m = df.as_matrix()
