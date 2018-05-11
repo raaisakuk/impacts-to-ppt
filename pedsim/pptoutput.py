@@ -127,7 +127,7 @@ def create_ppt(output, case_figs, case_tables, perf_fig, emsc_fig, emsc_parts_fi
             left = Inches(1)
             width = Inches(3)
             height = Inches(3)
-            slide.shapes.add_picture('case_0.png', left, top, width, height)
+            slide.shapes.add_picture('case_'+str(i)+'.png', left, top, width, height)
 
     #Slide 4
     overall_perf = prs.slide_layouts[0]
