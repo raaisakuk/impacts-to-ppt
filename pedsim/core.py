@@ -259,6 +259,7 @@ def get_cts_ind_score(hosp_df, cts_ind_header):
     '''
     curr_df = get_case_performance_data(hosp_df, cts_ind_header)
     if isinstance(curr_df, pd.DataFrame):
+        curr_df = curr_df.astype(dtype= {const.hosp_ans:"float64"})
         percent_score = 100*np.around(curr_df[const.hosp_ans].sum()/(10*curr_df[const.hosp_ans].count()),
                                       decimals=2)
     else:
