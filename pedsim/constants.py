@@ -56,7 +56,7 @@ cardiac_arrest = ["Cardiac arrest case - CPR started in <30 sec",
                   "Cardiac arrest case - Patient intubated pause CPR <10sec",
                   "Cardiac arrest case - Correct intubation equipment 3.5-4.5 cuffed, 4.5-5.5 uncuffed, 2/3 Miller/Mac",
                   "Cardiac arrest case - Correct hand location",
-                  "Cardiac arrest case - Correct depth"
+                  "Cardiac arrest case - Correct depth",
                   "Cardiac arrest case - Adequate recoil",
                   "Cardiac arrest case - ROSC stated",
                   "Cardiac arrest case - Compression rate between 100-120/min?",
