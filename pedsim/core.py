@@ -1,4 +1,5 @@
 from __future__ import division
+from math import pi
 import re
 
 import matplotlib.pyplot as plt
@@ -124,7 +125,7 @@ def create_case_df_fig(hosp_name, hosp_df, case_header, case_name):
     df = get_case_performance_checklist(data)
     score = get_case_performance_score(data)
     fig = get_case_performance_graph(hosp_name, case_name, score)
-    return df, fig, score
+    return df, fig, round(score,2)
 
 def get_emsc_score(hosp_df, emsc_header, weights):
     '''Calculate EMSC score for different EMSC cases. Each question is
@@ -189,6 +190,35 @@ def plot_triple_bargraph(first_name, first_val_arr, second_name,
     plt.tight_layout()
     return fig
 
+def plot_triple_radargraph(first_name, first_val_arr, second_name,
+                         second_val_arr, third_name, third_val_arr,
+                         title, xlabels): 
+    N = len(xlabels)
+    angles = [n / float(N) * 2 * pi for n in range(N)]
+    angles += angles[:1]
+    fig = plt.figure(figsize=(20,10))
+    ax = fig.add_subplot(111, polar=True)
+    ax.set_theta_offset(pi / 2)
+    ax.set_theta_direction(-1)
+    ax.set_title(title, size=35)
+    ax.set_rlabel_position(0)
+    plt.yticks([10 * i for i in range(1,10)],
+        ["10","20","30", "40", "50", "60" ,"70", "80", "90"],
+        color="grey", size=20)
+    plt.ylim(0,100)
+    names = [second_name, third_name, first_name]
+    val_arr = [second_val_arr, third_val_arr, first_val_arr]
+    colors = ['#E3E3E3', '#03A89E', '#00BFFF']
+    for i in range(len(names)):
+        val_arr[i] += val_arr[i][:1]
+        ax.plot(angles, val_arr[i], linewidth=1, linestyle='solid', label=names[i], color=colors[i])
+        ax.fill(angles, val_arr[i], colors[i], alpha=0.7)
+    plt.xticks(angles[:-1], 
+        [str(xlabels[i])+": "+str(first_val_arr[i])+"%" for i in range(len(xlabels))], 
+        color = "#1874CD", size=30)
+    plt.legend(loc='upper right', bbox_to_anchor=(0.1, 0.1), prop={'size':20})
+    return fig
+
 def plot_emsc_graph(hosp_name, qipi, staff, safety, equip, policy):
     '''Plot EMSC graph with hospital, GED and PED scores for all EMSC
     cases
@@ -232,10 +262,21 @@ def plot_performance_summary(hosp_name, fbd, sepsis, cardiac_arrest, teamwork, e
                   const.ped_score["seizure"], const.ped_score["cardiac_arrest"],
                   const.ped_score["teamwork"]]
     hosp_scores = [emsc, fbd, sepsis, seizure, cardiac_arrest, teamwork]
-    return plot_triple_bargraph(hosp_name, hosp_scores, const.ped_name, ped_scores, const.ged_name,
-                                ged_scores, "Score %", "Performance Summary",
-                                ["EMSC Readiness Score", "Foreign Body Case Score", "Sepsis Case Score",
-                                 "Seizure Case Score", "Cardiac Arrest Case Score", "Teamwork Score"])
+    xlabels = ["EMSC Readiness", "Foreign Body", "Sepsis",
+                    "Seizure", "Cardiac Arrest", "Teamwork"]
+    for i in range(6):
+        if not np.isnan(hosp_scores[i]):
+            hosp_scores.append(hosp_scores[i])
+            ged_scores.append(ged_scores[i])
+            ped_scores.append(ped_scores[i])
+            xlabels.append(xlabels[i])
+    hosp_scores = hosp_scores[6:]
+    ged_scores = ged_scores[6:]
+    ped_scores = ped_scores[6:]
+    xlabels = xlabels[6:]
+    
+    return plot_triple_radargraph(hosp_name, hosp_scores, const.ped_name, ped_scores, const.ged_name,
+                                ged_scores, "Performance Summary", xlabels)
 
 def get_cts_score(hosp_df, header):
     '''CTS score for the case when CTS values for different cases are combined
@@ -259,10 +300,14 @@ def get_cts_ind_score(hosp_df, cts_ind_header):
     '''
     curr_df = get_case_performance_data(hosp_df, cts_ind_header)
     if isinstance(curr_df, pd.DataFrame):
+        print(curr_df[map(lambda x: not x, curr_df[const.hosp_ans].isnull())])
         curr_df = curr_df.astype(dtype= {const.hosp_ans:"float64"})
         percent_score = 100*np.around(curr_df[const.hosp_ans].sum()/(10*curr_df[const.hosp_ans].count()),
                                       decimals=2)
+        print(curr_df[const.hosp_ans].sum(), curr_df[const.hosp_ans].count(), percent_score)
     else:
+        # print(cts_ind_header[0])
+        # print("\n\n")
         percent_score = np.nan
     return percent_score
 
@@ -278,6 +323,7 @@ def get_cts_score_from_parts(hosp_df):
     fbd = get_cts_ind_score(hosp_df, const.cts_tool_ind_fbd)
     seiz = get_cts_ind_score(hosp_df, const.cts_tool_ind_seiz)
     sep = get_cts_ind_score(hosp_df, const.cts_tool_ind_sep)
+    print("Casewise - ",fbd, sep, seiz, cardiac)
     return np.around(np.nanmean([cardiac, fbd, seiz, sep]), decimals=2)
 
 def get_overall_performance_scores(hosp_df):
@@ -291,7 +337,10 @@ def get_overall_performance_scores(hosp_df):
     disposition = get_case_performance_data(hosp_df, const.disposition)
     fam_pre = get_case_performance_data(hosp_df, const.family_pres)
     fam_care = get_case_performance_data(hosp_df, const.family_care)
-
+    print(weight_data)
+    print(disposition)
+    print(fam_pre)
+    print(fam_care)
     cts_score = get_cts_score(hosp_df, const.cts_tool_all)
     if np.isnan(cts_score):
        cts_score = get_cts_score_from_parts(hosp_df)
