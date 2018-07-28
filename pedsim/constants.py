@@ -276,6 +276,10 @@ equip_score = [1, 1, 1, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55,
 ged_name = "GED"
 ped_name = "PED"
 
+ped_color = "#E3E3E3"
+ged_color = "#03A89E"
+hosp_color = "#00BFFF"
+
 ged_score = {"sepsis": 73, "fbd": 80, "seizure": 68, "cardiac_arrest": 52, "teamwork": 74, "emsc": 64,
        "emsc_qipi": 36, "emsc_staff": 60, "emsc_safety": 72, "emsc_equip": 84, "emsc_policy": 53}
 
