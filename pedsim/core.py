@@ -109,6 +109,29 @@ def get_case_performance_graph(hosp_name, case_name, case_score):
     plt.tight_layout()
     return fig
 
+def get_case_performance_graph_donut(hosp_name, case_name, case_score):
+    hosp_graph = [[100 - case_score, case_score], ['white', const.hosp_color], 1]
+    ped_graph = [[100 - const.ped_score[case_name], const.ped_score[case_name]], 
+                    ['white', const.ped_color], 1.15]
+    ged_graph = [[100 - const.ged_score[case_name], const.ged_score[case_name]], 
+                    ['white', const.ged_color], 1.3]
+    center_graph = [[100], ['white'], 0.85]
+
+    fig = plt.figure(figsize = (10,10))
+    for each in [ged_graph, ped_graph, hosp_graph, center_graph]:
+        plt.pie(each[0], colors=each[1], 
+            startangle=90, shadow=False, radius=each[2])
+    plt.text(0, 0.1, str(case_score)+"%", horizontalalignment='center',
+         verticalalignment='center', fontsize=80, weight='bold', color='#00BFFF')
+    plt.text(0,-0.14, "PED-"+str(const.ped_score[case_name])+"%", 
+         horizontalalignment='center', verticalalignment='center', fontsize=40, 
+         weight='bold', color='#E3E3E3')
+    plt.text(0,-0.34, "GED-"+str(const.ged_score[case_name])+"%",
+         horizontalalignment='center', verticalalignment='center', fontsize=40,
+         weight='bold', color='#03A89E')
+    return fig
+
+
 def create_case_df_fig(hosp_name, hosp_df, case_header, case_name):
     '''Get case performance checklist and figure from hospital info
     :param hosp_name: Name of the hospital
@@ -123,9 +146,11 @@ def create_case_df_fig(hosp_name, hosp_df, case_header, case_name):
     '''
     data = get_case_performance_data(hosp_df, case_header)
     df = get_case_performance_checklist(data)
-    score = get_case_performance_score(data)
-    fig = get_case_performance_graph(hosp_name, case_name, score)
-    return df, fig, round(score,2)
+    score = round(get_case_performance_score(data), 2)
+    if np.isnan(score):
+        return df, np.nan, score
+    fig = get_case_performance_graph_donut(hosp_name, case_name, score)
+    return df, fig, score
 
 def get_emsc_score(hosp_df, emsc_header, weights):
     '''Calculate EMSC score for different EMSC cases. Each question is
@@ -175,12 +200,12 @@ def plot_triple_bargraph(first_name, first_val_arr, second_name,
     pos = list(range(len(first_val_arr)))
     width = 0.25
     fig, ax = plt.subplots(figsize=(10, 5))
-    plt.bar(pos, first_val_arr, width, alpha=0.5, color='r',
+    plt.bar(pos, first_val_arr, width, alpha=0.5, color=const.hosp_color,
             label=first_name, capsize=2)
     plt.bar([p + width for p in pos], second_val_arr, width, alpha=0.5,
-            color='g', label=second_name, capsize=2)
+            color=const.ped_color, label=second_name, capsize=2)
     plt.bar([p + 2 * width for p in pos], third_val_arr, width, alpha=0.5,
-            color='b', label=third_name, capsize=2)
+            color=const.ged_color, label=third_name, capsize=2)
     ax.set_title(title)
     ax.set_xticks([p + width for p in pos])
     ax.set_xticklabels(xlabels, rotation="vertical")
