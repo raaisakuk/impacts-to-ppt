@@ -15,7 +15,12 @@ fbd_checklist, fbd_fig, fbd_score = core.create_case_df_fig(hosp_name, df, const
 sep_checklist, sep_fig, sep_score = core.create_case_df_fig(hosp_name, df, const.sepsis, 'sepsis')
 sei_checklist, sei_fig, sei_score = core.create_case_df_fig(hosp_name, df, const.seizure, 'seizure')
 cdar_checklist, cdar_fig, cdar_score = core.create_case_df_fig(hosp_name, df, const.cardiac_arrest, 'cardiac_arrest')
-
+print(cdar_fig)
+print(fbd_checklist)
+print(sep_checklist)
+print(sei_checklist)
+print(cdar_checklist)
+print("\n\n\n")
 
 qipi_val = core.get_emsc_score(df, const.qi_pi, const.qi_pi_score)
 admin_val = core.get_emsc_score(df, const.admin, const.score_admin)
@@ -26,10 +31,14 @@ equip_val = core.get_emsc_score(df, const.equip, const.equip_score)
 
 emsc_fig = core.plot_emsc_graph(hosp_name, qipi_val, staff_val, safety_val, equip_val, policy_val)
 emsc_score = core.get_total_emsc_score(qipi_val, staff_val, safety_val, equip_val, policy_val, admin_val)
-emsc_case_fig = core.get_case_performance_graph(hosp_name, 'emsc', emsc_score)
+emsc_case_fig = core.get_case_performance_graph_donut(hosp_name, 'emsc', 30)
 
 overall_dict = core.get_overall_performance_scores(df)
+print(qipi_val, admin_val, staff_val, policy_val, equip_val)
+print(overall_dict)
 cts_score = overall_dict[const.cts_title]
+print("EMSC: ", emsc_score, "FBD: ", fbd_score, "SEP: ", sep_score, "SEI: ", sei_score, "CDAR: ",  cdar_score)
+
 pfmnc_fig = core.plot_performance_summary(hosp_name, fbd_score, sep_score, cdar_score, cts_score, emsc_score, sei_score)
 
 overall_df = core.create_overall_df(overall_dict)
