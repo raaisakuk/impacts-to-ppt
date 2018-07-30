@@ -21,7 +21,6 @@ print(sep_checklist)
 print(sei_checklist)
 print(cdar_checklist)
 print("\n\n\n")
-
 qipi_val = core.get_emsc_score(df, const.qi_pi, const.qi_pi_score)
 admin_val = core.get_emsc_score(df, const.admin, const.score_admin)
 staff_val = core.get_emsc_score(df, const.staff, const.score_staff)
@@ -34,15 +33,15 @@ emsc_score = core.get_total_emsc_score(qipi_val, staff_val, safety_val, equip_va
 emsc_case_fig = core.get_case_performance_graph_donut(hosp_name, 'emsc', 30)
 
 overall_dict = core.get_overall_performance_scores(df)
-print(qipi_val, admin_val, staff_val, policy_val, equip_val)
+print("admin: ", admin_val, "staff: ", staff_val, "qipi: ", qipi_val, "safety: ", safety_val, "policy: ", policy_val, "equip: ", equip_val)
 print(overall_dict)
 cts_score = overall_dict[const.cts_title]
 print("EMSC: ", emsc_score, "FBD: ", fbd_score, "SEP: ", sep_score, "SEI: ", sei_score, "CDAR: ",  cdar_score)
 
-pfmnc_fig = core.plot_performance_summary(hosp_name, fbd_score, sep_score, cdar_score, cts_score, emsc_score, sei_score)
+core.plot_performance_summary(hosp_name, fbd_score, sep_score, cdar_score, cts_score, emsc_score, sei_score)
 
 overall_df = core.create_overall_df(overall_dict)
 
 ppt.create_ppt(os.path.join(output_ppt_path, hosp_name+'.pptx'), [fbd_fig, cdar_fig, sep_fig, sei_fig],
                [fbd_checklist, cdar_checklist, sep_checklist, sei_checklist],
-               pfmnc_fig, emsc_case_fig, emsc_fig, overall_df)
+               emsc_case_fig, emsc_fig, overall_df)

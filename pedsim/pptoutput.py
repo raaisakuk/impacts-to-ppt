@@ -79,7 +79,7 @@ def df_to_table(slide, df, left, top, width, height, colnames=None):
             para = res.table.cell(row + 1, col).text_frame.paragraphs[0]
             para.font.size = Pt(12)
 
-def create_ppt(output, case_figs, case_tables, perf_fig, emsc_fig, emsc_parts_fig, overall_table):
+def create_ppt(output, case_figs, case_tables, emsc_fig, emsc_parts_fig, overall_table):
     """ Take the input powerpoint file and use it as the template for the output
     file.
     """
@@ -88,11 +88,10 @@ def create_ppt(output, case_figs, case_tables, perf_fig, emsc_fig, emsc_parts_fi
     #Slide 1
     perf_summ = prs.slide_layouts[0]
     slide = prs.slides.add_slide(perf_summ)
-    perf_fig.savefig('perf_fig.png')
     top = Inches(1)
-    left = Inches(1)
-    width = Inches(10)
-    height = Inches(5)
+    left = Inches(2)
+    width = Inches(8)
+    height = Inches(6)
     slide.shapes.add_picture('perf_fig.png', left, top, width, height)
 
     #Slide 2

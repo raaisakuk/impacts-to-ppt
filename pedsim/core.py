@@ -2,9 +2,11 @@ from __future__ import division
 from math import pi
 import re
 
+from pygal.style import Style
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import pygal as pygal
 import seaborn as sns
 
 import constants as const
@@ -217,32 +219,16 @@ def plot_triple_bargraph(first_name, first_val_arr, second_name,
 
 def plot_triple_radargraph(first_name, first_val_arr, second_name,
                          second_val_arr, third_name, third_val_arr,
-                         title, xlabels): 
-    N = len(xlabels)
-    angles = [n / float(N) * 2 * pi for n in range(N)]
-    angles += angles[:1]
-    fig = plt.figure(figsize=(20,10))
-    ax = fig.add_subplot(111, polar=True)
-    ax.set_theta_offset(pi / 2)
-    ax.set_theta_direction(-1)
-    ax.set_title(title, size=35)
-    ax.set_rlabel_position(0)
-    plt.yticks([10 * i for i in range(1,10)],
-        ["10","20","30", "40", "50", "60" ,"70", "80", "90"],
-        color="grey", size=20)
-    plt.ylim(0,100)
-    names = [second_name, third_name, first_name]
-    val_arr = [second_val_arr, third_val_arr, first_val_arr]
-    colors = ['#E3E3E3', '#03A89E', '#00BFFF']
-    for i in range(len(names)):
-        val_arr[i] += val_arr[i][:1]
-        ax.plot(angles, val_arr[i], linewidth=1, linestyle='solid', label=names[i], color=colors[i])
-        ax.fill(angles, val_arr[i], colors[i], alpha=0.7)
-    plt.xticks(angles[:-1], 
-        [str(xlabels[i])+": "+str(first_val_arr[i])+"%" for i in range(len(xlabels))], 
-        color = "#1874CD", size=30)
-    plt.legend(loc='upper right', bbox_to_anchor=(0.1, 0.1), prop={'size':20})
-    return fig
+                         title, xlabels):
+
+    custom_style = Style(colors = (const.ped_color, const.ged_color, const.hosp_color))
+    radar_chart = pygal.Radar(fill=True, width=800, height=400, style=custom_style)
+    radar_chart.title = title
+    radar_chart.x_labels = xlabels
+    radar_chart.add(second_name, first_val_arr)
+    radar_chart.add(third_name, second_val_arr)
+    radar_chart.add(first_name, third_val_arr)
+    radar_chart.render_to_png('perf_fig.png')
 
 def plot_emsc_graph(hosp_name, qipi, staff, safety, equip, policy):
     '''Plot EMSC graph with hospital, GED and PED scores for all EMSC
@@ -300,7 +286,7 @@ def plot_performance_summary(hosp_name, fbd, sepsis, cardiac_arrest, teamwork, e
     ped_scores = ped_scores[6:]
     xlabels = xlabels[6:]
     
-    return plot_triple_radargraph(hosp_name, hosp_scores, const.ped_name, ped_scores, const.ged_name,
+    plot_triple_radargraph(hosp_name, hosp_scores, const.ped_name, ped_scores, const.ged_name,
                                 ged_scores, "Performance Summary", xlabels)
 
 def get_cts_score(hosp_df, header):
