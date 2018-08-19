@@ -23,23 +23,25 @@ def get_hospital_data(excel_file, hospital_name):
     :return: dataframe with the data corresponding to only the given hospital
     '''
     report_out = pd.read_excel(excel_file)
-    new_report_out = report_out[report_out[const.site_hosp] == hospital_name].\
-        groupby([const.site_hosp]).max().fillna('').reset_index()
     try:
         latest_timestamp = max(report_out[[not x for x in report_out[const.timestamp].\
             isna()]][const.timestamp])
     except KeyError:
+        print("..........Timestamp not found. Initialising the Excelsheet.........")
         report_out = initialise_df(report_out)
         latest_timestamp = max(report_out[const.timestamp])
-    if latest_timestamp==latest_timestamp:
-        latest = report_out[report_out[const.timestamp]==latest_timestamp].reset_index()
-        for each in const.ged_score.keys():
-            const.ged_score[each] = latest[each][0]
-        for each in const.ped_score.keys():
-            const.ped_score[each] = latest[each][0]
-        const.total_ged_count = latest['ged_count'][0]
-        const.total_ped_count = latest['ped_count'][0]
-    return (report_out, new_report_out.replace('', np.nan))
+    finally:
+        if latest_timestamp==latest_timestamp:
+            latest = report_out[report_out[const.timestamp]==latest_timestamp].reset_index()
+            for each in const.ged_score.keys():
+                const.ged_score[each] = latest[each][0]
+            for each in const.ped_score.keys():
+                const.ped_score[each] = latest[each][0]
+            const.total_ged_count = latest['ged_count'][0]
+            const.total_ped_count = latest['ped_count'][0]
+        new_report_out = report_out[report_out[const.site_hosp] == hospital_name].\
+        groupby([const.site_hosp]).max().fillna('').reset_index()
+        return (report_out, new_report_out.replace('', np.nan))
 
 def initialise_df(df):
     empty_data_column = [np.nan for i in range(len(df))]
@@ -59,6 +61,8 @@ def validate_team_participation(hosp_df, case_header):
         case_df = hosp_df.filter(like=question).T.reset_index()
         case_df['index'] = case_df['index'].apply(lambda x: re.split('[.][0-9]$', x)[0])
         case_df = case_df[case_df['index'].isin(case_header)].reset_index()
+        if len(case_df)!=len(const.team_dict.keys()):
+            raise ValueError(const.column_name_error_message+question)
         this_series = case_df[0].isna()
         if (validate_series != this_series).any():
             raise ValueError(const.case_error_message+question)
