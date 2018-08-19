@@ -12,6 +12,7 @@ hosprow_col = 0
 index_name = "questions"
 replicates = "team_num"
 hosp_ans = 'survey_ans'
+timestamp = 'timestamp'
 
 ##
 team_dict = {0: "Team 1", 1: "Team 2", 2: "Team 3",
@@ -22,7 +23,10 @@ foreign_body_case = ["Foreign body case - Airway assessed (Look in mouth in firs
                      "Foreign body case - Breathing assessed (Listen to lungs with stethoscope in 1st 3 min)",
                      "Foreign body case - Proper size McGill forceps used to remove foreign body (Pediatric not adult)  0 Check if finger used to remove",
                      "Foreign body case - Stridor verbalized (in 1st 3min)"]
-
+fbd_replacement = {foreign_body_case[0]: "Airway assessed",
+                   foreign_body_case[1]: "Breathing assessed",
+                   foreign_body_case[2]: "McGill forceps used",
+                   foreign_body_case[3]: "Stridor verbalized"}
 
 sepsis = ["Sepsis case - Established 1st IV/IO (In first 3 min)",
           "Sepsis case - Began oxygen non-rebreather in first 3 min. Mention if other equipment (nasal cannula; simple mask; nothing) was used",
@@ -31,6 +35,13 @@ sepsis = ["Sepsis case - Established 1st IV/IO (In first 3 min)",
           "Sepsis case - Push-pull technique used 3-way stop-cock",
           "Sepsis case - Appropriate antibiotics given Ceftriaxone 240-720 mg AND Vancomycin 48-150mg",
           "Sepsis case - Any vasopressor given after 3rd bolus  Dopamine 25-80 mcg/min or Norepi 0.2-0.7 mcg/min or Epi 0.5-0.7 mcg/min"]
+sep_replacement = {sepsis[0]: "Establish 1st IV/IO",
+                   sepsis[1]: "Began high-flow O2",
+                   sepsis[2]: "60mL/kg given over 15min",
+                   sepsis[3]: "Establish 2nd IV/IO",
+                   sepsis[4]: "Push-pull techniques used",
+                   sepsis[5]: "Appropriate antibiotics given",
+                   sepsis[6]: "Start 3rd vasopressor after 3rd bolus"}
 
 seizure = ["Seizure case - Respiratory depression verbalized first 3 minutes.",
            "Seizure case - Began oxygen non rebreather in first 3 min. Mention if other (Nasal Cannula; Simple mask; nothing) was used.",
@@ -39,6 +50,13 @@ seizure = ["Seizure case - Respiratory depression verbalized first 3 minutes.",
            "Seizure case - Administered glucose D5 or 10 concentration. Mention if any other (D25/D50) was used",
            "Seizure case - Glucose dose correct D5: 48-144ccD10: 24-72cc",
            "Seizure case - ANY maintenance glucose infusion started"]
+sei_replacement = {seizure[0]: "Respiratory depression recognised",
+           seizure[1]: "Placed on O2",
+           seizure[2]: "Bedside glucose checked",
+           seizure[3]: "IV/IO placed",
+           seizure[4]: "Correct glucose concentration",
+           seizure[5]: "Correct Glucose dose",
+           seizure[6]: "Maintenance glucose started"}
 
 cardiac_arrest = ["Cardiac arrest case - CPR started in <30 sec",
                   "Cardiac arrest case - Backboard used",
@@ -63,6 +81,34 @@ cardiac_arrest = ["Cardiac arrest case - CPR started in <30 sec",
                   "Cardiac arrest case - Ventilation rate between 8-10/min?",
                   "Cardiac arrest case - ALL CPR cycles 120",
                   "Cardiac arrest case - No interruptions > 10 seconds (Count any pause in CPR except pre-shock)"]
+cardiac_replacement = {cardiac_arrest[0]: "CPR started in <30 sec",
+                  cardiac_arrest[1]: "Backboard used",
+                  cardiac_arrest[2]: "Pulse check < 120 sec into case",
+                  cardiac_arrest[3]: "IV/IO placed",
+                  cardiac_arrest[4]: "PEA verbalized",
+                  cardiac_arrest[5]: "1st dose of Epi in <5min",
+                  cardiac_arrest[6]: "2nd dose of Epi in 2-3min after 1st",
+                  cardiac_arrest[7]: "Continuous ETCO2 monitoring",
+                  cardiac_arrest[8]: "Ventricular fib verbalized",
+                  cardiac_arrest[9]: "Defibrillation dose 32-100J",
+                  cardiac_arrest[10]: "<10 sec stop/pause CPR preshock",
+                  cardiac_arrest[11]: "Defib safety: cleared people/O2",
+                  cardiac_arrest[12]: "CPR resumed immediately after DEFIB cont 120sec",
+                  cardiac_arrest[13]: "Patient intubated pause <10sec",
+                  cardiac_arrest[14]: "Intubation equipment",
+                  cardiac_arrest[15]: "Correct hand location",
+                  cardiac_arrest[16]: "Correct depth",
+                  cardiac_arrest[17]: "Adequate recoil",
+                  cardiac_arrest[18]: "ROSC stated",
+                  cardiac_arrest[19]: "Compression rate between 100-120/min",
+                  cardiac_arrest[20]: "Ventilation rate between 8-10/min",
+                  cardiac_arrest[21]: "ALL CPR cycles 120",
+                  cardiac_arrest[22]: "No interruptions > 10 seconds"}
+
+case_map = {'fbd': fbd_replacement,
+            'sepsis': sep_replacement,
+            'seizure': sei_replacement,
+            'cardiac_arrest': cardiac_replacement}
 
 ##TeamWork Evaluation Table
 
@@ -204,7 +250,8 @@ policy = ["36.Does your ED have a triage policy that specifically addresses ill 
             "Other policies/procedures - 38d. Death of the child in the ED",
             "Other policies/procedures - 38e. Reduced-dose radiation for CT and x-ray imaging based on pediatric age or weight",
             "Other policies/procedures - 39. Does your ED have a policy for promoting family-centered care?(e.g., family presence, family involvement in clinical decision making, etc.)",
-            "Other policies/procedures - 40. Does your hospital disaster plan address issues specific to care of children?"]
+            "Other policies/procedures - 40. Does your hospital disaster plan address issues specific to care of children?",
+            "43. Does your hospital have written inter-facility guidelines that outline procedural and administrative policies with other hospitals for the transfer of patients of all ages including children in need of care not available at your hospital? (Note: Compliance with EMTALA does not constitute having inter-facility transfer guidelines. The guidelines may be a separate document or part of an inter-facility transfer agreement document.)"]
 policy_score = [2.12, 1.7, 1.7, 1.7, 1.7, 1.7, 2.12, 2.12, 2.12]
 
 equip = ["Equipment / Supplies - 46. Is the ED staff trained on the location of all pediatric equipment and meds?",
@@ -280,11 +327,23 @@ ped_color = "#E3E3E3"
 ged_color = "#03A89E"
 hosp_color = "#00BFFF"
 
-ged_score = {"sepsis": 73, "fbd": 80, "seizure": 68, "cardiac_arrest": 52, "teamwork": 74, "emsc": 64,
-       "emsc_qipi": 36, "emsc_staff": 60, "emsc_safety": 72, "emsc_equip": 84, "emsc_policy": 53}
-
-ped_score = {"sepsis": 100, "fbd": 80, "seizure": 78, "cardiac_arrest": 67, "teamwork": 86, "emsc": 90,
-       "emsc_qipi": 81, "emsc_staff": 85, "emsc_safety": 76, "emsc_equip": 98, "emsc_policy": 92}
 
 case_name_dict = {'sepsis': 'Sepsis', 'cardiac_arrest': 'Cardiac Arrest', 'seizure': 'Seizure',
                   'fbd': 'Foreign Body', 'emsc':'EMSC Readiness'}
+case_error_message = "Following question has been answered by different number of teams:\n\t"
+
+
+
+######################################################################################
+############################# CONFIGURE THE VALUES BELOW #############################
+######################################################################################
+
+
+total_ged_count = 0
+total_ped_count = 0
+
+ged_score = {"ged_sepsis": 73, "ged_fbd": 80, "ged_seizure": 68, "ged_cardiac_arrest": 52, "ged_teamwork": 74, "ged_emsc": 64,
+       "ged_emsc_qipi": 36, "ged_emsc_staff": 60, "ged_emsc_safety": 72, "ged_emsc_equip": 84, "ged_emsc_policy": 53}
+
+ped_score = {"ped_sepsis": 100, "ped_fbd": 80, "ped_seizure": 78, "ped_cardiac_arrest": 67, "ped_teamwork": 86, "ped_emsc": 90,
+       "ped_emsc_qipi": 81, "ped_emsc_staff": 85, "ped_emsc_safety": 76, "ped_emsc_equip": 98, "ped_emsc_policy": 92}
