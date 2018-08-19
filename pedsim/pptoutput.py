@@ -8,7 +8,7 @@ from pptx.util import Pt
 
 path_dir = os.path.join(os.path.dirname(__file__))
 
-def df_to_table(slide, df, left, top, width, height, colnames=None):
+def df_to_table(slide, df, case_name=None, left=Inches(5), top=Inches(1), width=Inches(7), height=Inches(5), colnames=None):
     '''Converts a Pandas DataFrame to a PowerPoint table on the given
     Slide of a PowerPoint presentation.
     The table is a standard Powerpoint table, and can easily be modified with the Powerpoint tools,
@@ -61,6 +61,8 @@ def df_to_table(slide, df, left, top, width, height, colnames=None):
     if colnames is None:
         colnames = list(df.columns)
 
+    if case_name:
+        colnames[0] = case_name
     # Insert the column names
     for col_index, col_name in enumerate(colnames):
         # Column names can be tuples
@@ -79,7 +81,7 @@ def df_to_table(slide, df, left, top, width, height, colnames=None):
             para = res.table.cell(row + 1, col).text_frame.paragraphs[0]
             para.font.size = Pt(12)
 
-def create_ppt(output, case_figs, case_tables, emsc_fig, emsc_parts_fig, overall_table):
+def create_ppt(output, case_names, case_figs, case_tables, emsc_fig, emsc_parts_fig, overall_fig, overall_table):
     """ Take the input powerpoint file and use it as the template for the output
     file.
     """
@@ -88,11 +90,12 @@ def create_ppt(output, case_figs, case_tables, emsc_fig, emsc_parts_fig, overall
     #Slide 1
     perf_summ = prs.slide_layouts[0]
     slide = prs.slides.add_slide(perf_summ)
+    overall_fig.savefig('overall_fig.png')
     top = Inches(1)
-    left = Inches(2)
-    width = Inches(8)
-    height = Inches(6)
-    slide.shapes.add_picture('perf_fig.png', left, top, width, height)
+    left = Inches(1)
+    width = Inches(10)
+    height = Inches(5)
+    slide.shapes.add_picture('overall_fig.png', left, top, width, height)
 
     #Slide 2
     emsc = prs.slide_layouts[0]
@@ -114,29 +117,31 @@ def create_ppt(output, case_figs, case_tables, emsc_fig, emsc_parts_fig, overall
     #Slide 3
     for i in range(len(case_figs)):
         if isinstance(case_tables[i], pd.DataFrame):
+            case_figs[i].savefig('case_'+str(i)+'.png')
             case_slide = prs.slide_layouts[0]
             slide = prs.slides.add_slide(case_slide)
-            top = Inches(1)
-            left = Inches(5)
-            width = Inches(5.0)
-            height = Inches(5.0)
-            df_to_table(slide, case_tables[i], left, top, width, height)
-
-            case_figs[i].savefig('case_'+str(i)+'.png')
             top = Inches(1)
             left = Inches(1)
             width = Inches(3)
             height = Inches(3)
             slide.shapes.add_picture('case_'+str(i)+'.png', left, top, width, height)
+            if(len(case_tables[i])>12):
+                df_to_table(slide, case_tables[i][:12], case_names[i])
+                case_slide = prs.slide_layouts[0]
+                slide = prs.slides.add_slide(case_slide)
+                df_to_table(slide, case_tables[i][12:], case_names[i])
+                top = Inches(1)
+                left = Inches(1)
+                width = Inches(3)
+                height = Inches(3)
+                slide.shapes.add_picture('case_'+str(i)+'.png', left, top, width, height)
+            else:
+                df_to_table(slide, case_tables[i], case_names[i])
 
     #Slide 4
     overall_perf = prs.slide_layouts[0]
     slide = prs.slides.add_slide(overall_perf)
-    top = Inches(1)
-    left = Inches(1)
-    width = Inches(5.0)
-    height = Inches(5.0)
-    df_to_table(slide, overall_table, left, top, width, height)
+    df_to_table(slide=slide, df=overall_table, left=Inches(3))
 
     prs.save(output)
 
