@@ -5,4 +5,4 @@ def convert_truth_values_to_num(df):
     '''
     df = df.replace('Yes', 1)
     df = df.replace('No', 0)
-    return df.fillna(0)
+    return df
