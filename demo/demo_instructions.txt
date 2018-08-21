@@ -1,0 +1,8 @@
+How to create the demo ppt present in the same folder
+
+1. Go to pedsim_report/pedsim/
+2. The command should be of format
+	python report.py <path to excelsheet> <path of directory to save the excelsheet>
+	
+	For example, execute the folowing command to run the project on AP-hospital in the Raghu2.xlsx sheet and to save in the demo folder itself.
+	python report.py AP ../demo/Raghu2.xlsx ../demo
