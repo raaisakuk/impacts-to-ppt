@@ -195,7 +195,9 @@ def get_emsc_score(hosp_df, emsc_header, weights):
     is_entry_na = hosp_df[emsc_header].isna().any()
     for i in range(len(emsc_header)):
         if is_entry_na[i]==True:
-            raise ValueError("Following column cannot be empty:\n\t"+emsc_header[i])
+            if(emsc_header[i] not in const.qi_pi[1:] or\
+                hosp_df.get_value(const.hosprow_col, const.qi_pi[0])=='Yes'):
+                # raise ValueError("Following column cannot be empty:\n\t"+emsc_header[i])
     hosp_val_df = utils.convert_truth_values_to_num(hosp_df)
     total_score = sum(weights)
     num = 0
