@@ -269,7 +269,6 @@ equip = ["Equipment / Supplies - 46. Is the ED staff trained on the location of 
             "Equipment / Supplies - 50d. IV administration with calibrated chambers and extension tubing and/or infusion devices with ability to regulate rate & volume of infusate",
             "Equipment / Supplies - 50e. Umbilical vein catheters (3.5 F or 5F)",
             "Equipment / Supplies - 50f. Central venous catheters (any two sizes in range, 4F-7F)",
-            "Equipment / Supplies - 50f. Central venous catheters (any two sizes in range, 4F-7F) - Text",
             "Equipment / Supplies - 51a. Endotracheal tubes: cuffed or uncuffed 2.5 mm",
             "Equipment / Supplies - 51b. Endotracheal tubes: cuffed or uncuffed 3.0 mm",
             "Equipment / Supplies - 51c. Endotracheal tubes: cuffed or uncuffed 3.5 mm",
