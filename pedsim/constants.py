@@ -321,6 +321,8 @@ equip_score = [1, 1, 1, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55,
 ##GED and PED
 ged_name = "GED"
 ped_name = "PED"
+ed_category = "6. Which of the following is the best description of your ED for the care of children?"
+ped_category = "Pediatric ED in a Children's Hospital (hospital cares ONLY for children)"
 
 ped_color = "#E3E3E3"
 ged_color = "#03A89E"
