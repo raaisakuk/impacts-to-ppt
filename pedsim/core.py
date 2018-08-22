@@ -193,16 +193,19 @@ def get_emsc_score(hosp_df, emsc_header, weights):
     :return: percentage score which will be nan if all vals nan
     '''
     is_entry_na = hosp_df[emsc_header].isna().any()
-    for i in range(len(emsc_header)):
-        if is_entry_na[i]==True:
-            if(emsc_header[i] not in const.qi_pi[1:] or\
-                hosp_df.get_value(const.hosprow_col, const.qi_pi[0])=='Yes'):
-                raise ValueError("Following column cannot be empty:\n\t"+emsc_header[i])
     hosp_val_df = utils.convert_truth_values_to_num(hosp_df)
     total_score = sum(weights)
     num = 0
-    for header, val in zip(emsc_header, weights):
-        num = num + hosp_val_df.get_value(const.hosprow_col, header)*val
+    for i in range(len(emsc_header)):
+        header = emsc_header[i]
+        val = weights[i]
+        if(is_entry_na[i]==True):
+            if(header in const.qi_pi[1:] and \
+                hosp_df.at[const.hosprow_col, const.qi_pi[0]]=="No"):
+                continue
+            else:
+                raise ValueError("Following column cannot be empty:\n\t"+emsc_header[i])
+        num = num + hosp_val_df.at[const.hosprow_col, header]*val
     percent_score = 100*np.around(num/total_score, decimals=2)
     return percent_score
 
@@ -297,7 +300,7 @@ def plot_triple_radargraph(first_name, first_val_arr, second_name,
             xlabels[i]+": "+str(int(first_val_arr[i]))+"%", size=40, color = "#1874CD",
             horizontalalignment=ha, verticalalignment="center", fontweight='bold')
 
-    plt.legend(loc='upper right', bbox_to_anchor=(0.1, 0.1), prop={'size':20})
+    plt.legend(fancybox=True, loc='upper right', bbox_to_anchor=(0.1, 0.1), fontsize=40)
     return fig
 
 
@@ -368,6 +371,8 @@ def get_cts_score(hosp_df, header):
     :return: percentage score which is nan in case values are nan
     '''
     curr_df = (hosp_df[header].T)[const.hosprow_col]
+    if curr_df.count()==0:
+        return np.nan
     percent_score = 100*np.around(curr_df.sum()/(10*curr_df.count()), decimals=2)
     return percent_score
 
@@ -437,7 +442,7 @@ def update_average_scores(total_df, excel_file, hosp_df, hosp_name, this_scores)
     new_filepath = (".".join(excel_file.split(".")[:-1])).split("___")[0] +\
         "___"+"-".join(re.split("\s|\:|\.", str(dt.datetime.now())))+".xlsx"
     for each_key in this_scores.keys():
-        if(hosp_df.get_value(const.hosprow_col, const.ed_category)==const.ped_category):
+        if(hosp_df.at[const.hosprow_col, const.ed_category]==const.ped_category):
             updated_ped_score = (const.ped_score['ped_'+each_key]*const.total_ped_count+\
                 this_scores[each_key])/(const.total_ped_count+1)
             updated_ged_score = const.ged_score['ged_'+each_key]
@@ -447,7 +452,7 @@ def update_average_scores(total_df, excel_file, hosp_df, hosp_name, this_scores)
                 this_scores[each_key])/(const.total_ged_count+1)
         total_df.loc[total_df[const.site_hosp]==hosp_name, 'ped_'+each_key] = updated_ped_score
         total_df.loc[total_df[const.site_hosp]==hosp_name, 'ged_'+each_key] = updated_ged_score
-    if(hosp_df.get_value(const.hosprow_col, const.ed_category)==const.ped_category):
+    if(hosp_df.at[const.hosprow_col, const.ed_category]==const.ped_category):
         ped_count = const.total_ped_count+1
         ged_count = const.total_ged_count
     else:
