@@ -197,7 +197,7 @@ def get_emsc_score(hosp_df, emsc_header, weights):
         if is_entry_na[i]==True:
             if(emsc_header[i] not in const.qi_pi[1:] or\
                 hosp_df.get_value(const.hosprow_col, const.qi_pi[0])=='Yes'):
-                # raise ValueError("Following column cannot be empty:\n\t"+emsc_header[i])
+                raise ValueError("Following column cannot be empty:\n\t"+emsc_header[i])
     hosp_val_df = utils.convert_truth_values_to_num(hosp_df)
     total_score = sum(weights)
     num = 0
@@ -268,7 +268,7 @@ def plot_triple_radargraph(first_name, first_val_arr, second_name,
     ax = fig.add_subplot(111, polar=True)
     ax.set_theta_offset(pi / 2)
     ax.set_theta_direction(-1)
-    ax.set_title(title, size=45)
+    ax.set_title(title, size=45, fontweight='bold')
     ax.set_rlabel_position(0)
     plt.yticks([10 * i for i in range(1,10)],
         [10 * i for i in range(1,10)],
@@ -290,12 +290,12 @@ def plot_triple_radargraph(first_name, first_val_arr, second_name,
         elif 0 < angle_rad < pi:
             ha, distance_ax = "left", 2
         elif angle_rad == pi:
-            ha, distance_ax = "center", 3
+            ha, distance_ax = "center", 4
         else:
             ha, distance_ax = "right", 2
         ax.text(angle_rad, 100 + distance_ax,
-            xlabels[i]+": "+str(int(first_val_arr[i]))+"%", size=25, color = "#1874CD",
-            horizontalalignment=ha, verticalalignment="center")
+            xlabels[i]+": "+str(int(first_val_arr[i]))+"%", size=40, color = "#1874CD",
+            horizontalalignment=ha, verticalalignment="center", fontweight='bold')
 
     plt.legend(loc='upper right', bbox_to_anchor=(0.1, 0.1), prop={'size':20})
     return fig
@@ -433,20 +433,28 @@ def create_overall_df(overall_scores_dict):
                         columns=['Other Elements', 'Score'])
     return df
 
-def update_average_scores(total_df, excel_file, hosp_name, this_scores):
+def update_average_scores(total_df, excel_file, hosp_df, hosp_name, this_scores):
     new_filepath = (".".join(excel_file.split(".")[:-1])).split("___")[0] +\
         "___"+"-".join(re.split("\s|\:|\.", str(dt.datetime.now())))+".xlsx"
     for each_key in this_scores.keys():
-        updated_ped_score = (const.ped_score['ped_'+each_key]*const.total_ped_count+
-            this_scores[each_key])/(const.total_ped_count+1)
-        updated_ged_score = (const.ged_score['ged_'+each_key]*const.total_ged_count+
-            this_scores[each_key])/(const.total_ged_count+1)
+        if(hosp_df.get_value(const.hosprow_col, const.ed_category)==const.ped_category):
+            updated_ped_score = (const.ped_score['ped_'+each_key]*const.total_ped_count+\
+                this_scores[each_key])/(const.total_ped_count+1)
+            updated_ged_score = const.ged_score['ged_'+each_key]
+        else:
+            updated_ped_score = const.ped_score['ped_'+each_key]
+            updated_ged_score = (const.ged_score['ged_'+each_key]*const.total_ged_count+\
+                this_scores[each_key])/(const.total_ged_count+1)
         total_df.loc[total_df[const.site_hosp]==hosp_name, 'ped_'+each_key] = updated_ped_score
         total_df.loc[total_df[const.site_hosp]==hosp_name, 'ged_'+each_key] = updated_ged_score
-    total_df.loc[total_df[const.site_hosp]==hosp_name, 'ped_count']\
-        = const.total_ped_count+1
-    total_df.loc[total_df[const.site_hosp]==hosp_name, 'ged_count']\
-        = const.total_ged_count+1
+    if(hosp_df.get_value(const.hosprow_col, const.ed_category)==const.ped_category):
+        ped_count = const.total_ped_count+1
+        ged_count = const.total_ged_count
+    else:
+        ped_count = const.total_ped_count
+        ged_count = const.total_ged_count+1
+    total_df.loc[total_df[const.site_hosp]==hosp_name, 'ped_count'] = ped_count
+    total_df.loc[total_df[const.site_hosp]==hosp_name, 'ged_count'] = ged_count
     total_df.loc[total_df[const.site_hosp]==hosp_name, const.timestamp] = dt.datetime.now()
     writer = pd.ExcelWriter(new_filepath, engine='openpyxl')
     total_df.to_excel(writer)
