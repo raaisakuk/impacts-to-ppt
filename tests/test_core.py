@@ -130,4 +130,4 @@ def test_update_average_scores():
     hosp_name = 'hn'
     total_df = core.initialise_df(total_df)
     if total_df["timestamp"].isna().all():
-        core.update_average_scores(total_df, input_file, hosp_name, this_scores)
+        core.update_average_scores(total_df, input_file, total_df, hosp_name, this_scores)
