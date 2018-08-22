@@ -37,7 +37,7 @@ this_scores = {"sepsis": sep_score, "fbd": fbd_score, "seizure": sei_score, "car
        "emsc_qipi": qipi_val, "emsc_staff": staff_val, "emsc_safety": safety_val, "emsc_equip": equip_val, "emsc_policy": policy_val}
 
 if df["timestamp"].isna().all():
-	core.update_average_scores(total_df, survey_file, hosp_name, this_scores)
+	core.update_average_scores(total_df, survey_file, df, hosp_name, this_scores)
 
 ppt.create_ppt(os.path.join(output_ppt_path, hosp_name+'.pptx'), ['Foreign Body', 'Sepsis', 'Seizure','Cardiac arrest'], [fbd_fig, sep_fig, sei_fig, cdar_fig],
                [fbd_checklist, sep_checklist, sei_checklist, cdar_checklist],
