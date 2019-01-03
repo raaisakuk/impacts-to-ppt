@@ -333,6 +333,7 @@ case_name_dict = {'sepsis': 'Sepsis', 'cardiac_arrest': 'Cardiac Arrest', 'seizu
                   'fbd': 'Foreign Body', 'emsc':'EMSC Readiness'}
 case_error_message = "Following question has been answered by different number of teams:\n\t"
 column_name_error_message = "Excel sheet should contain exactly "+str(len(team_dict))+" columns with following name:\n\t"
+column_not_empty_message = "Following column cannot be empty:\n\t"
 
 
 ######################################################################################
