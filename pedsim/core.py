@@ -15,7 +15,10 @@ def get_hospital_data(excel_file, hospital_name):
     '''
     Reads excel file which has all the data and in case any hospital has data in more than
     one rows, combines them on the basis of max. The idea is that if this is the case, all
-    rows will be empty except one.
+    rows will be empty except one. It also checks the excelsheet for timestamp which
+    signifies the date and time when the excelsheet was last used/updated and what are the
+    latest average ped and ged scores. If the timestamp is not found, excelsheet is then
+    initialised using 'initialise_df' funciton
     Todo: If both rows have entries it can create problems. User should be warned in such
     cases.
     :param excel_file: survey output from Qualtrix
@@ -44,6 +47,18 @@ def get_hospital_data(excel_file, hospital_name):
         return (report_out, new_report_out.replace('', np.nan))
 
 def initialise_df(df):
+    '''
+    When the excelsheet is being used for the first time, it does not have the meta data
+    such as the average ped and ged scores. In such a case, this function adds the
+    following extra columns to the excelsheet using the values set in ./constants.py.
+    ['ped_count', 'ged_count', 'timestamp', 'ged_fbd', 'ged_sepsis', 'ged_seizure',
+     'ged_cardiac_arrest', 'ged_teamwork', 'ged_emsc', 'ged_qipi', 'ged_emsc_staff',
+     'ged_emsc_safety', 'ged_emsc_equip', 'ged_emsc_policy', 'ped_fbd', 'ped_sepsis',
+     'ped_seizure', 'ped_cardiac_arrest', 'ped_teamwork', 'ped_emsc', 'ped_qipi',
+     'ped_emsc_staff', 'ped_emsc_safety', 'ped_emsc_equip', 'ped_emsc_policy']
+    :param df: pandas DataFrame loaded from the excelsheet
+    :return: dataframe with extra columns initialised
+    '''
     empty_data_column = [np.nan for i in range(len(df))]
     extra_columns = ["ped_count", 'ged_count', "timestamp", "ged_fbd",\
      "ged_sepsis", "ged_seizure", "ged_cardiac_arrest", "ged_teamwork",\
@@ -56,6 +71,15 @@ def initialise_df(df):
     return df
 
 def validate_team_participation(hosp_df, case_header):
+    '''
+    For a particular case, a team should answer all the questions if participating.
+    Therefore, number of teams that have answered any question 'a' in the case should
+    be same to that of any other question in that case. If that is not the case,
+    this function raises error pointing the question that is answered by differently.
+    :param hosp_df: df obtained from get_hospital_data, it has only the row which corresponds
+    to the answers obtained from a particular hospital
+    :return: None
+    '''
     validate_series = hosp_df.filter(like=case_header[0]).T.reset_index()[0].isna()
     for question in case_header:
         case_df = hosp_df.filter(like=question).T.reset_index()
@@ -127,6 +151,12 @@ def get_case_performance_checklist(case_df):
         return np.nan
 
 def get_updated_checklist_format(checklist_df, case_name):
+    '''
+    As the questions/column names include the case headings too, they are too long to be diplayed
+    in the ppt. Hence, this function replaces the long names with short column names
+    :param checklist_df: dataframe with long names
+    :return dataframe with updated short names
+    '''
     case_replacement = const.case_map[case_name]
     replacements = []
     for each in checklist_df[const.index_name]:
@@ -135,6 +165,14 @@ def get_updated_checklist_format(checklist_df, case_name):
     return checklist_df
 
 def get_case_performance_graph_donut(hosp_name, case_name, case_score):
+    '''
+    Create donut graph of the current hospital alongside the ged and peg scores
+    for a particular case. This has been acheived using four pie chart graphs.
+    :param hosp_name: name of the current hospital
+    :param case_name: name of the case
+    :param case_score: score obtained by the current hospital in the present score
+    :return: donut graph saved in the figure format
+    '''
     hosp_graph = [[100 - case_score, case_score], ['white', const.hosp_color], 1]
     ped_graph = [[100 - const.ped_score["ped_"+case_name], const.ped_score["ped_"+case_name]],
                     ['white', const.ped_color], 1.15]
@@ -204,7 +242,7 @@ def get_emsc_score(hosp_df, emsc_header, weights):
                 hosp_df.at[const.hosprow_col, const.qi_pi[0]]=="No"):
                 continue
             else:
-                raise ValueError("Following column cannot be empty:\n\t"+emsc_header[i])
+                raise ValueError(const.column_not_empty_message+emsc_header[i])
         num = num + hosp_val_df.at[const.hosprow_col, header]*val
     percent_score = 100*np.around(num/total_score, decimals=2)
     return percent_score
@@ -264,6 +302,19 @@ def plot_triple_bargraph(first_name, first_val_arr, second_name,
 def plot_triple_radargraph(first_name, first_val_arr, second_name,
                          second_val_arr, third_name, third_val_arr,
                          title, xlabels):
+    '''Plotting grouped radar graph, with three values from current hospital,
+    ped and ged for the overall performance grouped together and then plotted for 
+    multiple conditions at different angles
+    :param first_name: name corresponding to the first set of values
+    :param first_val_arr: list of values which will form leftmost bars
+    :param second_name: name corresponding to the second set of values
+    :param second_val_arr: list of values which will form middle bars
+    :param third_name: name corresponding to the third set of values
+    :param third_val_arr: list of values which will form rightmost bars
+    :param title: Title of the plot
+    :param xlabels: list of x labels
+    :return: Figure handle
+    '''
     N = len(xlabels)
     angles = [n / float(N) * 2 * pi for n in range(N)]
     angles += angles[:1]
@@ -439,6 +490,17 @@ def create_overall_df(overall_scores_dict):
     return df
 
 def update_average_scores(total_df, excel_file, hosp_df, hosp_name, this_scores):
+    '''
+    Once all the calculations and plotting are done, we have to check whether this
+    hospital is a PED or a GED hospital and update the average values of the respective
+    category in the excelsheet.
+    :param total_df: the complete df that has been initialised(if first time)
+    :param excel_file: path of the file where the dataframe should be saved as excel
+    :param hosp_df: df containing signle row with only the current hospital data
+    :param hosp_name: name of the current hospital
+    :param this_scores: scores calculated from the current hospital data
+    :return: None
+    '''
     new_filepath = (".".join(excel_file.split(".")[:-1])).split("___")[0] +\
         "___"+"-".join(re.split("\s|\:|\.", str(dt.datetime.now())))+".xlsx"
     for each_key in this_scores.keys():
